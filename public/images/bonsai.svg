@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
+  <!-- Tronc du bonsaï -->
+  <rect x="23" y="30" width="4" height="10" fill="#8B4513" />
+  <!-- Feuillage -->
+  <circle cx="25" cy="20" r="12" fill="#228B22" />
+</svg>

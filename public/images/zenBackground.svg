@@ -1,0 +1,37 @@
+<svg
+  width="800"
+  height="600"
+  viewBox="0 0 800 600"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Couleur de base du sable -->
+  <rect width="800" height="600" fill="#dcd3b2" />
+
+  <!-- Motif de lignes horizontales pour simuler le râteau -->
+  <defs>
+    <pattern
+      id="rakedLines"
+      width="5"
+      height="5"
+      patternUnits="userSpaceOnUse"
+    >
+      <!-- Ligne horizontale -->
+      <path d="M0 0 L5 0" stroke="#c2b19d" stroke-width="1" />
+    </pattern>
+  </defs>
+  <!-- Application du motif sur toute la zone, avec une légère opacité -->
+  <rect width="800" height="600" fill="url(#rakedLines)" opacity="0.2" />
+
+  <!-- Cercles concentriques au centre -->
+  <g stroke="#c2b19d" fill="none" stroke-width="2" opacity="0.6">
+    <circle cx="400" cy="300" r="30" />
+    <circle cx="400" cy="300" r="50" />
+    <circle cx="400" cy="300" r="70" />
+    <circle cx="400" cy="300" r="90" />
+    <circle cx="400" cy="300" r="110" />
+    <circle cx="400" cy="300" r="130" />
+    <circle cx="400" cy="300" r="150" />
+    <circle cx="400" cy="300" r="170" />
+    <circle cx="400" cy="300" r="190" />
+  </g>
+</svg>

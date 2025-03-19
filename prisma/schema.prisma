@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model StressQuestion {
+  id     Int    @id @default(autoincrement())
+  event  String @unique
+  points Int
+}
+
+model StressResult {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  user       User?    @relation(fields: [userId], references: [id], name: "UserStressResults")
+  totalScore Int
+  createdAt  DateTime @default(now())
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique(map: "User_email_key")
+  password      String
+  name          String?
+  role          String         @default("user")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt // ✅ Ajout de `@updatedAt`
+  stressResults StressResult[] @relation("UserStressResults")
+  emotions      Emotion[]      @relation("UserEmotions")
+  favorites     Favorite[] // ✅ Ajout de la relation inverse avec Favorite
+  resetToken    String? // ✅ Token de réinitialisation
+  resetTokenExpires DateTime? // ✅ Expiration du token
+}
+
+model Emotion {
+  id          Int      @id @default(autoincrement())
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id], name: "UserEmotions")
+  emotionId   Int      // ✅ L'émotion choisie parmi EmotionType
+  emotionType EmotionType @relation(fields: [emotionId], references: [id], name: "EmotionToType") // ✅ Ajout du nom de relation
+  date        DateTime @default(now())
+  comment     String?       // ✅ Nouveau champ pour le commentaire
+}
+
+model EmotionType {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  level    Int      // 1 = Emotion principale, 2 = Sous-émotion
+  parentId Int?     
+  parent   EmotionType? @relation("EmotionHierarchy", fields: [parentId], references: [id])  // ✅ Relation inverse parent
+  children EmotionType[] @relation("EmotionHierarchy")  // ✅ Relation inverse enfants
+  emotions Emotion[] @relation("EmotionToType") // ✅ Relation inverse vers Emotion
+}
+
+
+model Activity {
+  id          Int        @id @default(autoincrement())
+  title       String     @unique
+  description String
+  category    String
+  duration    String
+  level       String
+  location    String
+  equipment   String?
+  isActive    Boolean    @default(true) // ✅ Ajouté pour désactivation
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  favorites   Favorite[]
+}
+
+
+
+model Favorite {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  activityId Int
+  activity   Activity @relation(fields: [activityId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, activityId])
+}
+
+model PageContent {
+  id       Int    @id @default(autoincrement())
+  page     String @unique
+  title    String
+  content  String
+  updatedAt DateTime @updatedAt
+}

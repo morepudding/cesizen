@@ -1,0 +1,13 @@
+@startuml
+Utilisateur -> Interface Web : Lance l'action
+Interface Web -> Serveur : Demande le questionnaire
+Serveur -> Base de données : Récupère les questions
+Base de données -> Serveur : Renvoie les questions
+Serveur -> Interface Web : Retourne le questionnaire
+Utilisateur -> Interface Web : Remplit le questionnaire
+Interface Web -> Serveur : Envoie les réponses
+Serveur -> Base de données : Calcule et enregistre le résultat
+Base de données -> Serveur : Renvoie le résultat final
+Serveur -> Interface Web : Retourne le résultat final
+Interface Web -> Utilisateur : Affiche le résultat
+@enduml

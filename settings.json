@@ -1,0 +1,14 @@
+// .vscode/settings.json
+{
+    // Désactive la validation CSS native (qui ne connaît pas Tailwind)
+    "css.validate": false,
+    
+    // (Optionnel) Désactive la validation PostCSS si installée
+    "postcss.validate": false,
+  
+    // Active l'auto-complétion Emmet pour les classes Tailwind
+    "tailwindCSS.emmetCompletions": true
+  
+    // Assure-toi bien d'avoir l'extension "Tailwind CSS IntelliSense" pour ces fonctionnalités
+  }
+  

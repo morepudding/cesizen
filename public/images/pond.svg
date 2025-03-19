@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+  <!-- Forme générale du bassin -->
+  <ellipse cx="50" cy="50" rx="45" ry="30" fill="#87CEFA" />
+  <!-- Un léger dégradé pour simuler la profondeur -->
+  <ellipse cx="50" cy="50" rx="40" ry="25" fill="#ADD8E6" />
+</svg>

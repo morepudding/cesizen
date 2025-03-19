@@ -1,0 +1,27 @@
+<mxfile version="14.4.8">
+  <diagram id="SeqDiag" name="Sequence Minimal">
+    <mxGraphModel>
+      <root>
+        <!-- Calque de base -->
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Acteur 1 : Utilisateur (rectangle basique) -->
+        <mxCell id="actorUser" value="Utilisateur" vertex="1" parent="1">
+          <mxGeometry x="80" y="60" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Acteur 2 : Interface Web (rectangle basique) -->
+        <mxCell id="actorInterface" value="Interface Web" vertex="1" parent="1">
+          <mxGeometry x="280" y="60" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Flèche 1 : Utilisateur -> Interface Web -->
+        <mxCell id="arrow1" value="Action" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell source="actorUser" target="actorInterface"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

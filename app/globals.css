@@ -2,20 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* 
+  Fichier simplifié : on s'appuie surtout sur
+  les classes Tailwind et sur "dark:" pour le mode sombre.
+*/
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Appliquer le fond clair ou sombre */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-background text-foreground font-sans transition-colors;
+}
+
+/* Header (utilise la classe dark: pour la version sombre) */
+header {
+  @apply bg-card dark:bg-darkCard shadow-header py-4 px-6 flex items-center justify-between animate-fadeInDown transition-colors;
+}
+
+/* Boutons */
+button {
+  @apply bg-primary text-white px-4 py-2 rounded font-bold transition-transform-opacity hover:scale-105;
+}
+
+button:hover {
+  @apply bg-secondary text-foreground;
+}
+
+/* Cartes */
+.card {
+  @apply bg-card dark:bg-darkCard rounded-lg shadow-card p-4 transition-transform hover:scale-105;
+}
+
+/* Champs de formulaire */
+input,
+select {
+  @apply bg-white dark:bg-darkCard border border-foreground rounded-md p-2 transition-colors;
+}
+
+input:focus,
+select:focus {
+  @apply border-primary outline-none;
 }

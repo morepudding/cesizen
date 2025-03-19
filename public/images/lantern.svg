@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
+  <!-- Corps de la lanterne -->
+  <rect x="15" y="15" width="20" height="20" fill="#DAA520" stroke="#8B6914" stroke-width="2" />
+  <!-- Partie supérieure en forme de dôme -->
+  <circle cx="25" cy="15" r="5" fill="#FFD700" />
+</svg>
