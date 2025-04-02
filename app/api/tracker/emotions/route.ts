@@ -29,10 +29,17 @@ export async function GET(req: Request) {
       userId: session.user.id,
       date: dateFilter,
     },
-    include: { emotionType: true }, // ✅ Ajout pour inclure les détails de l’émotion
+    include: { 
+      emotionType: {
+        include: {
+          parent: true
+        }
+      }
+    },
     orderBy: { date: "desc" },
   });
 
+  console.log("Émotions récupérées:", emotions);
   return NextResponse.json(emotions);
 }
 
@@ -40,25 +47,50 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
+    console.log("Session:", session);
 
-    if (!session) {
+    if (!session?.user?.id) {
+      console.log("No user ID in session");
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
+    // Vérifier si l'utilisateur existe
+    const user = await prisma.user.findUnique({
+      where: { id: Number(session.user.id) }
+    });
+
+    if (!user) {
+      console.log("User not found in database");
+      return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 });
+    }
+
     const body = await req.json();
-    const { emotionId, comment } = body; // Récupère le commentaire
+    console.log("Request body:", body);
+    const { emotionId, comment } = body;
 
     if (!emotionId) {
       return NextResponse.json({ error: "L'émotion est requise" }, { status: 400 });
     }
 
+    console.log("Creating emotion with:", {
+      emotionId: Number(emotionId),
+      userId: Number(session.user.id),
+      comment: comment || null
+    });
+
     const newEmotion = await prisma.emotion.create({
       data: {
-        emotionId: emotionId,
-        userId: session.user?.id,
-        comment: comment || null, // Inclure le commentaire facultatif
+        emotionId: Number(emotionId),
+        userId: Number(session.user.id),
+        comment: comment || null,
       },
-      include: { emotionType: true },
+      include: { 
+        emotionType: {
+          include: {
+            parent: true
+          }
+        }
+      },
     });
 
     return NextResponse.json(newEmotion);

@@ -7,7 +7,16 @@ import { motion, AnimatePresence } from "framer-motion";
 interface Emotion {
   id: number;
   date: string;
-  emotionType: { name: string; parent?: { name: string } };
+  emotionType: {
+    name: string;
+    parent?: {
+      name: string;
+      color: string;
+      bgColor: string;
+    };
+    color: string;
+    bgColor: string;
+  };
   comment?: string;
 }
 
@@ -17,18 +26,6 @@ interface EmotionType {
   level: number;
   parentId: number | null;
 }
-
-// Mapping des couleurs pour les émotions
-const emotionColors: Record<string, { border: string; bg: string }> = {
-  "Joie": { border: "border-yellow-500", bg: "bg-yellow-50" },
-  "Tristesse": { border: "border-blue-500", bg: "bg-blue-50" },
-  "Colère": { border: "border-red-500", bg: "bg-red-50" },
-  "Peur": { border: "border-purple-500", bg: "bg-purple-50" },
-  "Surprise": { border: "border-orange-500", bg: "bg-orange-50" },
-  "Dégoût": { border: "border-green-500", bg: "bg-green-50" },
-  "Confiance": { border: "border-teal-500", bg: "bg-teal-50" },
-  "Anticipation": { border: "border-pink-500", bg: "bg-pink-50" },
-};
 
 export default function EmotionTracker() {
   const { data: session, status } = useSession();
@@ -48,12 +45,14 @@ export default function EmotionTracker() {
   const fetchEmotions = async () => {
     const res = await fetch("/api/tracker/emotions");
     const data = await res.json();
+    console.log("Émotions reçues:", data);
     setUserEmotions(data);
   };
 
   const fetchEmotionTypes = async () => {
     const res = await fetch("/api/emotions/all");
     const data = await res.json();
+    console.log("Types d'émotions reçus:", data);
     setEmotionTypes(data);
   };
 
@@ -204,16 +203,15 @@ export default function EmotionTracker() {
               </div>
               <div className="space-y-4">
                 {emotions.map((emotion) => {
-                  const colors = emotionColors[emotion.emotionType.parent?.name || emotion.emotionType.name] || { border: "border-gray-500", bg: "bg-gray-50" };
                   return (
                     <motion.div
                       key={emotion.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 20 }}
-                      className={`relative group hover:shadow-xl transition-shadow duration-200 rounded-xl overflow-hidden ${colors.bg}`}
+                      className={`relative group hover:shadow-xl transition-shadow duration-200 rounded-xl overflow-hidden ${emotion.emotionType.parent?.bgColor || emotion.emotionType.bgColor}`}
                     >
-                      <div className={`relative p-6 border-4 ${colors.border} rounded-xl`}>
+                      <div className={`p-6 border-l-4 ${emotion.emotionType.parent?.color || emotion.emotionType.color}`}>
                         <div className="flex justify-between items-start mb-4">
                           <div>
                             <div className="text-2xl font-semibold text-gray-800">

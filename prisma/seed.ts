@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -210,6 +211,43 @@ const activities = [
   }
 ];
 
+// Types d'émotions secondaires
+const secondaryEmotions: { [key: string]: string[] } = {
+  "Joie": ["Amusement", "Fierté", "Optimisme", "Enthousiasme", "Soulagement", "Contentement"],
+  "Tristesse": ["Mélancolie", "Nostalgie", "Déception", "Chagrin", "Solitude", "Regret"],
+  "Colère": ["Frustration", "Irritation", "Agacement", "Rage", "Indignation", "Exaspération"],
+  "Peur": ["Anxiété", "Inquiétude", "Stress", "Panique", "Appréhension", "Nervosité"],
+  "Surprise": ["Étonnement", "Stupéfaction", "Émerveillement", "Confusion", "Perplexité", "Choc"],
+  "Dégoût": ["Aversion", "Répulsion", "Écœurement", "Mépris", "Répugnance", "Rejet"]
+};
+
+// Types d'émotions principales
+const primaryEmotions = [
+  { name: "Joie", level: 1, color: "border-yellow-500", bgColor: "bg-yellow-50" },
+  { name: "Tristesse", level: 1, color: "border-blue-500", bgColor: "bg-blue-50" },
+  { name: "Colère", level: 1, color: "border-red-500", bgColor: "bg-red-50" },
+  { name: "Peur", level: 1, color: "border-purple-500", bgColor: "bg-purple-50" },
+  { name: "Surprise", level: 1, color: "border-orange-500", bgColor: "bg-orange-50" },
+  { name: "Dégoût", level: 1, color: "border-green-500", bgColor: "bg-green-50" }
+];
+
+// Création de l'utilisateur admin
+const createAdminUser = async () => {
+  const hashedPassword = await bcrypt.hash('admin123', 10);
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@cesizen.com' },
+    update: {},
+    create: {
+      email: 'admin@cesizen.com',
+      password: hashedPassword,
+      name: 'Admin',
+      role: 'admin'
+    }
+  });
+  console.log('✅ Utilisateur admin créé');
+  return admin;
+};
+
 async function main() {
   console.log('🌱 Début du seeding...');
 
@@ -217,6 +255,12 @@ async function main() {
   await prisma.favorite.deleteMany();
   await prisma.activity.deleteMany();
   await prisma.stressQuestion.deleteMany();
+  await prisma.emotion.deleteMany();
+  await prisma.emotionType.deleteMany();
+  await prisma.user.deleteMany();
+
+  // Création de l'utilisateur admin
+  await createAdminUser();
 
   // Création des questions de stress
   for (const question of stressQuestions) {
@@ -232,6 +276,27 @@ async function main() {
       data: activity
     });
     console.log(`✅ Activité créée : ${created.title}`);
+  }
+
+  // Création des types d'émotions principales et secondaires
+  const emotionTypes = [];
+  for (const emotion of primaryEmotions) {
+    const created = await prisma.emotionType.create({ data: emotion });
+    console.log(`Emotion principale créée : ${created.name}`);
+    emotionTypes.push(created);
+
+    // Création des émotions secondaires associées
+    const secondaryList = secondaryEmotions[emotion.name];
+    for (const secondaryName of secondaryList) {
+      const secondaryEmotion = await prisma.emotionType.create({
+        data: {
+          name: secondaryName,
+          level: 2,
+          parentId: created.id
+        }
+      });
+      console.log(`  └─ Emotion secondaire créée : ${secondaryEmotion.name}`);
+    }
   }
 
   console.log('🌱 Seeding terminé !');

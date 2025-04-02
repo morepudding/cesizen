@@ -95,16 +95,20 @@ async function main() {
 
   // Types d'émotions principales
   const primaryEmotions = [
-    { name: "Joie", level: 1 },
-    { name: "Tristesse", level: 1 },
-    { name: "Colère", level: 1 },
-    { name: "Peur", level: 1 },
-    { name: "Surprise", level: 1 },
-    { name: "Dégoût", level: 1 }
+    { name: "Joie", level: 1, color: "border-yellow-500", bgColor: "bg-yellow-50" },
+    { name: "Tristesse", level: 1, color: "border-blue-500", bgColor: "bg-blue-50" },
+    { name: "Colère", level: 1, color: "border-red-500", bgColor: "bg-red-50" },
+    { name: "Peur", level: 1, color: "border-indigo-500", bgColor: "bg-indigo-50" },
+    { name: "Surprise", level: 1, color: "border-orange-500", bgColor: "bg-orange-50" },
+    { name: "Dégoût", level: 1, color: "border-green-500", bgColor: "bg-green-50" }
   ];
   for (const emotion of primaryEmotions) {
     const created = await prisma.emotionType.create({ data: emotion });
-    console.log(`Emotion principale créée : ${created.name}`);
+    console.log(`Emotion principale créée : ${created.name}`, {
+      id: created.id,
+      color: created.color,
+      bgColor: created.bgColor
+    });
     emotionTypes.push(created);
   }
 
