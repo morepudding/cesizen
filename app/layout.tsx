@@ -69,6 +69,16 @@ function Navbar() {
             Respiration
           </Link>
         </li>
+        <li>
+          <Link href="/faq" className="hover:text-green-600 transition">
+            FAQ
+          </Link>
+        </li>
+        <li>
+          <Link href="/zenGarden" className="hover:text-green-600 transition">
+            Jardin Zen
+          </Link>
+        </li>
         {/* Lien "Mon profil" avec icône (affiché si la session existe) */}
         {session && (
           <li>

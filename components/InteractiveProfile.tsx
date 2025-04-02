@@ -31,7 +31,7 @@ export default function InteractiveProfile() {
           transition={{ duration: 0.4 }}
         >
           <p className="text-sm">
-            Accédez à votre profil pour personnaliser votre expérience et consulter vos statistiques.
+            Accédez à votre <a href = "dashboard">profil</a> pour personnaliser votre expérience et consulter vos statistiques.
           </p>
         </motion.div>
       )}

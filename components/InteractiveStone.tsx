@@ -31,7 +31,7 @@ export default function InteractiveStone() {
           transition={{ duration: 0.4 }}
         >
           <p className="text-sm">
-            Ces pierres symbolisent vos niveaux de stress. Observez-les pour découvrir des conseils afin de mieux gérer vos tensions.
+            Faites un <a href = "stress">test de stress</a> pour découvrir vos niveaux de stress. 
           </p>
         </motion.div>
       )}

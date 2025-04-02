@@ -110,91 +110,131 @@ export default function ActivitiesPage() {
   });
 
   return (
-    <div className="flex flex-col md:flex-row p-10 space-y-10 md:space-y-0 md:space-x-10">
-      {/* Liste des activités */}
-      <div className="flex-1">
-        <h1 className="text-2xl font-bold mb-4">🧘 Activités de Détente</h1>
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50 p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold text-green-800 mb-8 text-center">🧘 Activités de Détente</h1>
 
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+            {error}
+          </div>
+        )}
 
         {/* Filtres */}
-        <div className="mb-6 flex space-x-4">
-          <input
-            type="text"
-            placeholder="Rechercher..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border p-2 rounded flex-1"
-          />
-          <select
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="border p-2 rounded"
-          >
-            <option value="">Toutes les catégories</option>
-            <option value="Bien-être">Bien-être</option>
-            <option value="Sport">Sport</option>
-            <option value="Loisir">Loisir</option>
-            <option value="Aventure">Aventure</option>
-          </select>
+        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg mb-8">
+          <div className="flex flex-col md:flex-row gap-4">
+            <input
+              type="text"
+              placeholder="Rechercher une activité..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="flex-1 border border-green-200 p-3 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent"
+            />
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="border border-green-200 p-3 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent"
+            >
+              <option value="">Toutes les catégories</option>
+              <option value="Bien-être">Bien-être</option>
+              <option value="Sport">Sport</option>
+              <option value="Loisir">Loisir</option>
+              <option value="Aventure">Aventure</option>
+            </select>
+          </div>
         </div>
 
-        {/* Liste des activités */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredActivities.map((activity) => (
-            <div key={activity.id} className="border p-4 rounded-lg shadow">
-              <h2 className="text-lg font-semibold">
-                <Link href={`/activities/${activity.id}`}>
-                  <span className="text-blue-600 hover:underline cursor-pointer">
-                    {activity.title}
-                  </span>
-                </Link>
-              </h2>
-              <p className="text-gray-600">{activity.description}</p>
-              <span className="text-sm text-blue-500">{activity.category}</span>
-              <p className="text-sm text-gray-500">
-                ⏳ {activity.duration} | 🎯 {activity.level} | 📍 {activity.location}
-              </p>
-              {session && (
-                <button
-                  onClick={() => handleAddFavorite(activity.id)}
-                  className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Liste des activités */}
+          <div className="lg:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredActivities.map((activity) => (
+                <div 
+                  key={activity.id} 
+                  className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-green-100 flex flex-col"
                 >
-                  ⭐ Ajouter aux favoris
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Liste des favoris */}
-      {session && (
-        <div className="flex-1 bg-gray-100 p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4">💛 Vos favoris</h2>
-          {favorites.length > 0 ? (
-            <ul>
-              {favorites.map((fav) => (
-                <li key={fav.id} className="p-2 border-b flex justify-between items-center">
-                  {fav.activity ? (
-                    <span>{fav.activity.title}</span>
-                  ) : (
-                    <span className="text-red-500">⚠️ Activité introuvable</span>
-                  )}
-                  <button
-                    onClick={() => handleRemoveFavorite(fav.activity?.id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                  >
-                    ❌ Retirer
-                  </button>
-                </li>
+                  <div className="p-6 flex flex-col h-full">
+                    <div className="flex-none">
+                      <h2 className="text-xl font-semibold text-green-800 mb-3">
+                        <Link href={`/activities/${activity.id}`} className="hover:text-green-600 transition">
+                          {activity.title}
+                        </Link>
+                      </h2>
+                      <p className="text-gray-600 mb-4 line-clamp-2 h-12">{activity.description}</p>
+                    </div>
+                    <div className="flex-none">
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                          {activity.category}
+                        </span>
+                      </div>
+                      <div className="space-y-2 text-sm text-gray-600 mb-4">
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600">⏳</span> {activity.duration}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600">🎯</span> {activity.level}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600">📍</span> {activity.location}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex-grow flex items-end">
+                      {session && (
+                        <button
+                          onClick={() => handleAddFavorite(activity.id)}
+                          className="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition flex items-center justify-center gap-2 h-10"
+                        >
+                          <div className="w-6 h-6 flex items-center justify-center">
+                            <span className="text-base">⭐</span>
+                          </div>
+                          <span>Ajouter aux favoris</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
               ))}
-            </ul>
-          ) : (
-            <p>Vous n'avez pas encore de favoris.</p>
+            </div>
+          </div>
+
+          {/* Liste des favoris */}
+          {session && (
+            <div className="lg:col-span-1">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 sticky top-6">
+                <h2 className="text-xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                  <span>💛</span> Mes Favoris
+                </h2>
+                {favorites.length > 0 ? (
+                  <div className="space-y-3">
+                    {favorites.map((fav) => (
+                      <div 
+                        key={fav.id} 
+                        className="bg-green-50 rounded-lg p-3 flex items-center justify-between group"
+                      >
+                        {fav.activity ? (
+                          <span className="text-green-800 font-medium truncate">{fav.activity.title}</span>
+                        ) : (
+                          <span className="text-red-500">⚠️ Activité introuvable</span>
+                        )}
+                        <button
+                          onClick={() => handleRemoveFavorite(fav.activity?.id)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-red-500 hover:text-red-600"
+                        >
+                          ❌
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 italic">Vous n'avez pas encore de favoris.</p>
+                )}
+              </div>
+            </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

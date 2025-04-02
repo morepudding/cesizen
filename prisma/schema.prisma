@@ -54,25 +54,31 @@ model EmotionType {
   parent   EmotionType? @relation("EmotionHierarchy", fields: [parentId], references: [id])  // ✅ Relation inverse parent
   children EmotionType[] @relation("EmotionHierarchy")  // ✅ Relation inverse enfants
   emotions Emotion[] @relation("EmotionToType") // ✅ Relation inverse vers Emotion
+  color    String?  // Couleur de l'émotion (uniquement pour niveau 1)
+  bgColor  String?  // Couleur de fond de l'émotion (uniquement pour niveau 1)
 }
 
+enum ActivityCategory {
+  BIEN_ETRE
+  SPORT
+  ART
+  AVENTURE
+}
 
 model Activity {
   id          Int        @id @default(autoincrement())
   title       String     @unique
   description String
-  category    String
+  category    ActivityCategory
   duration    String
   level       String
   location    String
   equipment   String?
-  isActive    Boolean    @default(true) // ✅ Ajouté pour désactivation
+  isActive    Boolean    @default(true)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   favorites   Favorite[]
 }
-
-
 
 model Favorite {
   id         Int      @id @default(autoincrement())

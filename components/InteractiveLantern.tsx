@@ -31,7 +31,7 @@ export default function InteractiveLantern() {
           transition={{ duration: 0.4 }}
         >
           <p className="text-sm">
-            Laissez-vous guider par la lumière. Prenez quelques instants pour méditer et apaiser votre esprit.
+            Gardez un journal pour écrire vos pensées et vos émotions, avec notre <a href = "tracker">tracker de sentiment.</a>
           </p>
         </motion.div>
       )}

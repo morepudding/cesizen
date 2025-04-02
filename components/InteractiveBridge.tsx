@@ -31,7 +31,7 @@ export default function InteractiveBridge() {
           transition={{ duration: 0.4 }}
         >
           <p className="text-sm">
-            Traversez ce pont pour méditer. Prenez un moment pour observer votre chemin intérieur.
+            Faites une activité pour vous détendre et vous sentir mieux, avec notre liste d'activités <a href = "activity">ici.</a>
           </p>
         </motion.div>
       )}
