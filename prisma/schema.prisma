@@ -22,18 +22,21 @@ model StressResult {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique(map: "User_email_key")
-  password      String
+id            Int            @id @default(autoincrement())
   name          String?
-  role          String         @default("user")
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt // ✅ Ajout de `@updatedAt`
-  stressResults StressResult[] @relation("UserStressResults")
-  emotions      Emotion[]      @relation("UserEmotions")
-  favorites     Favorite[] // ✅ Ajout de la relation inverse avec Favorite
-  resetToken    String? // ✅ Token de réinitialisation
-  resetTokenExpires DateTime? // ✅ Expiration du token
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role          @default(USER)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  favorites     Favorite[]
+  emotions      UserEmotion[]
+  results       Result[]
+  isActive      Boolean       @default(true)
+  resetToken     String?
+  resetTokenExpires DateTime?
 }
 
 model Emotion {
