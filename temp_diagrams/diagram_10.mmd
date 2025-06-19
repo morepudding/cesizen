@@ -1,0 +1,44 @@
+flowchart TD
+    %% Style des acteurs et cas d'utilisation
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px,color:black
+    classDef usecase fill:#e4f2ff,stroke:#2980b9,stroke-width:1px,rx:8px,ry:8px,color:black
+    classDef include fill:#d5f5e3,stroke:#1abc9c,stroke-width:1px,rx:8px,ry:8px,color:black
+    classDef extend fill:#fdedec,stroke:#e74c3c,stroke-width:1px,rx:8px,ry:8px,color:black
+
+    %% Acteurs
+    Admin((Administrateur)):::actor
+    System((Système)):::actor
+    
+    %% Cas d'utilisation
+    UC1[Consulter le tableau de bord]:::usecase
+    UC2[Gérer les utilisateurs]:::usecase
+    UC3[Gérer les activités]:::usecase
+    UC4[Gérer les questions de stress]:::usecase
+    UC5["Gérer les types d'émotions"]:::usecase
+    UC6[Gérer le contenu du site]:::usecase
+    UC7[Générer des rapports]:::usecase
+    UC8[Envoyer des notifications]:::usecase
+    UC9[Effectuer des sauvegardes]:::usecase
+    
+    %% Cas d'inclusion/extension
+    UC_A[Activer/Désactiver un utilisateur]:::include
+    UC_R[Réinitialiser un mot de passe]:::include
+    UC_S["Consulter les statistiques d'utilisation"]:::include
+    
+    %% Relations admin
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    
+    %% Relations système
+    System --> UC8
+    System --> UC9
+    
+    %% Relations d'inclusion
+    UC2 -.-> |<<include>>| UC_A
+    UC2 -.-> |<<include>>| UC_R
+    UC1 -.-> |<<include>>| UC_S

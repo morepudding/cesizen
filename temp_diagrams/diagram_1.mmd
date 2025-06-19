@@ -1,0 +1,31 @@
+stateDiagram-v2
+    [*] --> NonInscrit: Accès initial
+    
+    NonInscrit --> EnAttente: S'inscrire
+    NonInscrit --> Connecté: Se connecter (compte existant)
+    
+    EnAttente --> NonValidé: Email envoyé
+    NonValidé --> Actif: Cliquer sur lien de validation
+    NonValidé --> Expiré: Délai de validation dépassé
+    
+    Expiré --> NonValidé: Demander nouvel email
+    
+    Actif --> Connecté: Se connecter
+    Actif --> MdpOublié: Demander réinitialisation
+    
+    MdpOublié --> EnRéinitialisation: Email envoyé
+    EnRéinitialisation --> Actif: Nouveau mot de passe défini
+    EnRéinitialisation --> Expiré: Délai dépassé
+    
+    Connecté --> Actif: Se déconnecter
+    Connecté --> ModificationProfil: Modifier informations
+    ModificationProfil --> Connecté: Modifications enregistrées
+    
+    Actif --> Désactivé: Désactiver compte
+    Désactivé --> Actif: Réactiver compte
+    
+    Actif --> Supprimé: Supprimer définitivement
+    Désactivé --> Supprimé: Supprimer définitivement
+    Expiré --> Supprimé: Nettoyage automatique
+    
+    Supprimé --> [*]

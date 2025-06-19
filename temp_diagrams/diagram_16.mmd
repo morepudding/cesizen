@@ -1,0 +1,75 @@
+flowchart TD
+    %% Styles et couleurs (version sombre)
+    classDef user fill:#283593,stroke:#1a237e,stroke-width:1px,color:#ffffff
+    classDef ui fill:#37474f,stroke:#263238,stroke-width:1px,color:#eceff1
+    classDef api fill:#424242,stroke:#212121,stroke-width:1px,color:#f5f5f5
+    classDef data fill:#455a64,stroke:#37474f,stroke-width:1px,color:#eceff1
+    classDef monitor fill:#4e342e,stroke:#3e2723,stroke-width:1px,color:#efebe9
+    classDef deploy fill:#263238,stroke:#263238,stroke-width:1px,color:#eceff1
+    
+    %% Utilisateurs et rôles
+    Visitor(["Visiteur"]):::user
+    User(["Utilisateur"]):::user
+    Admin(["Administrateur"]):::user
+    
+    %% Interface utilisateur
+    subgraph Interface["Interface Utilisateur"]
+        Pages["Pages Publiques\net Protégées"]:::ui
+        Dashboard["Tableau de Bord\nUtilisateur"]:::ui
+        AdminPanel["Panneau\nAdministration"]:::ui
+    end
+    
+    %% API et logique métier
+    subgraph API["Endpoints API"]
+        AuthAPI["Authentification\nJWT & Sessions"]:::api
+        PublicAPI["API\nPubliques"]:::api
+        ProtectedAPI["API\nProtégées"]:::api
+        AdminAPI["API\nAdmin"]:::api
+    end
+    
+    %% Base de données
+    subgraph Database["Base de données"]
+        UserData["Données\nUtilisateurs"]:::data
+        ContentData["Contenu\nApplication"]:::data
+        SystemData["Données\nSystème"]:::data
+    end
+    
+    %% Déploiement et monitoring
+    Deployment["Déploiement\nFront/Back"]:::deploy
+    Monitoring["Erreurs\n& Logs"]:::monitor
+    
+    %% Relations entre composants
+    Visitor --> Pages
+    Visitor --> PublicAPI
+    
+    User --> Pages
+    User --> Dashboard
+    User --> PublicAPI
+    User --> ProtectedAPI
+    User -- "Authentification" --> AuthAPI
+    
+    Admin --> Pages
+    Admin --> Dashboard
+    Admin --> AdminPanel
+    Admin --> PublicAPI
+    Admin --> ProtectedAPI
+    Admin --> AdminAPI
+    Admin -- "Authentification" --> AuthAPI
+    
+    Pages -- "Requêtes API JSON" --> PublicAPI
+    Dashboard -- "Requêtes API JSON" --> ProtectedAPI
+    AdminPanel -- "Requêtes API JSON" --> AdminAPI
+    
+    AuthAPI --> UserData
+    PublicAPI --> ContentData
+    ProtectedAPI --> UserData
+    ProtectedAPI --> ContentData
+    AdminAPI --> UserData
+    AdminAPI --> ContentData
+    AdminAPI --> SystemData
+    
+    Interface -- "Erreurs client" --> Monitoring
+    API -- "Erreurs serveur" --> Monitoring
+    
+    Deployment --> Interface
+    Deployment --> API

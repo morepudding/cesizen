@@ -31,7 +31,7 @@ export default function InteractiveBridge() {
           transition={{ duration: 0.4 }}
         >
           <p className="text-sm">
-            Faites une activité pour vous détendre et vous sentir mieux, avec notre liste d'activités <a href = "activity">ici.</a>
+            Faites une activité pour vous détendre et vous sentir mieux, avec notre liste d'activités <a href = "activities">ici.</a>
           </p>
         </motion.div>
       )}

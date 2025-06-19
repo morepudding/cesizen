@@ -1,0 +1,42 @@
+flowchart TD
+    %% Style des acteurs et cas d'utilisation
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px,color:black
+    classDef usecase fill:#e4f2ff,stroke:#2980b9,stroke-width:1px,rx:8px,ry:8px,color:black
+    classDef include fill:#d5f5e3,stroke:#1abc9c,stroke-width:1px,rx:8px,ry:8px,color:black
+    classDef extend fill:#fdedec,stroke:#e74c3c,stroke-width:1px,rx:8px,ry:8px,color:black
+
+    %% Acteurs
+    User((Utilisateur)):::actor
+    Admin((Administrateur)):::actor
+    
+    %% Cas d'utilisation
+    UC1[Consulter la liste des activités]:::usecase
+    UC2[Filtrer les activités]:::usecase
+    UC3[Ajouter une activité aux favoris]:::usecase
+    UC4[Gérer ses favoris]:::usecase
+    UC5[Créer une activité]:::usecase
+    UC6[Modifier une activité]:::usecase
+    UC7[Désactiver une activité]:::usecase
+    
+    %% Cas d'inclusion/extension
+    UC_F[Filtrer par catégorie]:::include
+    UC_N[Filtrer par niveau]:::include
+    UC_D[Filtrer par durée]:::include
+    UC_S[Rechercher par mot-clé]:::extend
+    
+    %% Relations utilisateur
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    
+    %% Relations admin
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    
+    %% Relations d'inclusion/extension
+    UC2 -.-> |<<include>>| UC_F
+    UC2 -.-> |<<include>>| UC_N
+    UC2 -.-> |<<include>>| UC_D
+    UC1 -.-> |<<extend>>| UC_S

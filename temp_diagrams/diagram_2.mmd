@@ -1,0 +1,65 @@
+flowchart TB
+    %% Styles
+    classDef client fill:#f9f0ff,stroke:#9c27b0,stroke-width:2px
+    classDef server fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef database fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef cdn fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    classDef service fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+
+    %% Appareils clients
+    subgraph "Terminaux Clients"
+        Browser["Navigateur Web\n(Chrome, Firefox, Safari, Edge)"]:::client
+        Mobile["Applications Mobiles\n(PWA)"]:::client
+    end
+
+    %% Infrastructure Vercel
+    subgraph "Plateforme Vercel"
+        VercelEdge["Vercel Edge Network\n(CDN Global)"]:::cdn
+        
+        subgraph "Vercel Serverless Functions"
+            NextJSApp["Next.js App\n(Frontend SSR + API Routes)"]:::server
+            NextAuth["NextAuth.js\n(Authentification)"]:::service
+        end
+        
+        ImageOptimization["Optimisation d'Images\nAutomatique"]:::service
+    end
+
+    %% Base de données
+    subgraph "Infrastructure de Données"
+        PlanetScale["PlanetScale\n(MySQL Serverless)"]:::database
+        
+        subgraph "Monitoring et Observabilité"
+            Sentry["Sentry\n(Error Tracking)"]:::service
+            VercelAnalytics["Vercel Analytics\n(Performances)"]:::service
+        end
+    end
+
+    %% Services externes
+    subgraph "Services Externes"
+        EmailService["Service Email\n(Resend.com)"]:::service
+        BlobStorage["Stockage Objets\n(Vercel Blob)"]:::service
+    end
+    
+    %% CI/CD Pipeline
+    subgraph "CI/CD"
+        GitHub["GitHub\n(Source Control)"]:::service
+        GitHubActions["GitHub Actions\n(Tests Automatisés)"]:::service
+    end
+    
+    %% Relations
+    Browser --> VercelEdge
+    Mobile --> VercelEdge
+    
+    VercelEdge --> NextJSApp
+    NextJSApp --> NextAuth
+    NextJSApp --> PlanetScale
+    NextAuth --> PlanetScale
+    
+    NextJSApp --> EmailService
+    NextJSApp --> BlobStorage
+    
+    NextJSApp --> Sentry
+    NextJSApp --> VercelAnalytics
+    
+    GitHub --> GitHubActions
+    GitHubActions --> VercelEdge

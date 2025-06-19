@@ -1,0 +1,1179 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Analyse du projet CESIzen}\label{analyse-du-projet-cesizen}
+
+\subsection{1. Analyse fonctionnelle générale
+(UML)}\label{analyse-fonctionnelle-guxe9nuxe9rale-uml}
+
+\subsubsection{1.1 Diagramme de cas d’utilisation
+global}\label{diagramme-de-cas-dutilisation-global}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graph TD}
+\NormalTok{    \%\% Acteurs}
+\NormalTok{    Guest((Utilisateur non authentifié))}
+\NormalTok{    User((Utilisateur authentifié))}
+\NormalTok{    Admin((Administrateur))}
+    
+\NormalTok{    \%\% Cas d\textquotesingle{}utilisation {-} Général}
+\NormalTok{    Register[S\textquotesingle{}inscrire]}
+\NormalTok{    Login[Se connecter]}
+\NormalTok{    ResetPassword[Réinitialiser mot de passe]}
+    
+\NormalTok{    \%\% Cas d\textquotesingle{}utilisation {-} Fonctionnalités}
+\NormalTok{    ViewZenGarden[Visualiser le jardin zen]}
+\NormalTok{    ExploreBreathing[Explorer les exercices de respiration]}
+\NormalTok{    TakeStressTest[Effectuer un test de stress]}
+\NormalTok{    ViewDashboard[Consulter le tableau de bord]}
+\NormalTok{    TrackEmotions[Suivre ses émotions]}
+\NormalTok{    ViewActivities[Consulter les activités]}
+\NormalTok{    AddFavorite[Ajouter une activité aux favoris]}
+\NormalTok{    ViewFAQ[Consulter la FAQ]}
+    
+\NormalTok{    \%\% Cas d\textquotesingle{}utilisation {-} Admin}
+\NormalTok{    ManageUsers[Gérer les utilisateurs]}
+\NormalTok{    ManageStressQuestions[Gérer les questions de stress]}
+\NormalTok{    ManageEmotionTypes[Gérer les types d\textquotesingle{}émotions]}
+\NormalTok{    ManageActivities[Gérer les activités]}
+\NormalTok{    ManageContent[Gérer le contenu des pages]}
+    
+\NormalTok{    \%\% Relations {-} Guest}
+\NormalTok{    Guest {-}{-}\textgreater{} Register}
+\NormalTok{    Guest {-}{-}\textgreater{} Login}
+\NormalTok{    Guest {-}{-}\textgreater{} ResetPassword}
+\NormalTok{    Guest {-}{-}\textgreater{} ViewZenGarden}
+\NormalTok{    Guest {-}{-}\textgreater{} ViewFAQ}
+    
+\NormalTok{    \%\% Relations {-} User}
+\NormalTok{    User {-}{-}\textgreater{} ExploreBreathing}
+\NormalTok{    User {-}{-}\textgreater{} TakeStressTest}
+\NormalTok{    User {-}{-}\textgreater{} ViewDashboard}
+\NormalTok{    User {-}{-}\textgreater{} TrackEmotions}
+\NormalTok{    User {-}{-}\textgreater{} ViewActivities}
+\NormalTok{    User {-}{-}\textgreater{} AddFavorite}
+    
+\NormalTok{    \%\% Relations {-} Admin}
+\NormalTok{    Admin {-}{-}\textgreater{} ManageUsers}
+\NormalTok{    Admin {-}{-}\textgreater{} ManageStressQuestions}
+\NormalTok{    Admin {-}{-}\textgreater{} ManageEmotionTypes}
+\NormalTok{    Admin {-}{-}\textgreater{} ManageActivities}
+\NormalTok{    Admin {-}{-}\textgreater{} ManageContent}
+    
+\NormalTok{    \%\% Héritage}
+\NormalTok{    Admin {-}{-}\textgreater{} User}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme de cas d’utilisation
+représente les interactions entre les différents types d’utilisateurs et
+les fonctionnalités du système CESIzen. Les cercles représentent les
+acteurs et les rectangles représentent les fonctionnalités accessibles.
+La flèche entre Admin et User indique que l’administrateur hérite de
+toutes les fonctionnalités d’un utilisateur standard.
+\end{quote}
+
+\subsubsection{1.2 Diagramme de classes}\label{diagramme-de-classes}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{classDiagram}
+\NormalTok{    User {-}{-}\textgreater{} StressResult}
+\NormalTok{    User {-}{-}\textgreater{} Emotion}
+\NormalTok{    User {-}{-}\textgreater{} Favorite}
+\NormalTok{    EmotionType {-}{-}\textgreater{} Emotion}
+\NormalTok{    EmotionType o{-}{-} EmotionType : "parent"}
+\NormalTok{    Activity {-}{-}\textgreater{} Favorite}
+    
+\NormalTok{    class User \{}
+\NormalTok{        +int id}
+\NormalTok{        +string name}
+\NormalTok{        +string email}
+\NormalTok{        +string password}
+\NormalTok{        +Role role}
+\NormalTok{        +datetime createdAt}
+\NormalTok{        +datetime updatedAt}
+\NormalTok{        +bool isActive}
+\NormalTok{        +string resetToken}
+\NormalTok{        +datetime resetTokenExpires}
+\NormalTok{    \}}
+    
+\NormalTok{    class StressQuestion \{}
+\NormalTok{        +int id}
+\NormalTok{        +string event}
+\NormalTok{        +int points}
+\NormalTok{    \}}
+    
+\NormalTok{    class StressResult \{}
+\NormalTok{        +int id}
+\NormalTok{        +int userId}
+\NormalTok{        +int totalScore}
+\NormalTok{        +datetime createdAt}
+\NormalTok{    \}}
+    
+\NormalTok{    class Emotion \{}
+\NormalTok{        +int id}
+\NormalTok{        +int userId}
+\NormalTok{        +int emotionId}
+\NormalTok{        +datetime date}
+\NormalTok{        +string comment}
+\NormalTok{    \}}
+    
+\NormalTok{    class EmotionType \{}
+\NormalTok{        +int id}
+\NormalTok{        +string name}
+\NormalTok{        +int level}
+\NormalTok{        +int parentId}
+\NormalTok{        +string color}
+\NormalTok{        +string bgColor}
+\NormalTok{    \}}
+    
+\NormalTok{    class Activity \{}
+\NormalTok{        +int id}
+\NormalTok{        +string title}
+\NormalTok{        +string description}
+\NormalTok{        +ActivityCategory category}
+\NormalTok{        +string duration}
+\NormalTok{        +string level}
+\NormalTok{        +string location}
+\NormalTok{        +string equipment}
+\NormalTok{        +bool isActive}
+\NormalTok{        +datetime createdAt}
+\NormalTok{        +datetime updatedAt}
+\NormalTok{    \}}
+    
+\NormalTok{    class Favorite \{}
+\NormalTok{        +int id}
+\NormalTok{        +int userId}
+\NormalTok{        +int activityId}
+\NormalTok{        +datetime createdAt}
+\NormalTok{    \}}
+    
+\NormalTok{    class PageContent \{}
+\NormalTok{        +int id}
+\NormalTok{        +string page}
+\NormalTok{        +string title}
+\NormalTok{        +string content}
+\NormalTok{        +datetime updatedAt}
+\NormalTok{    \}}
+    
+\NormalTok{    class Role \{}
+\NormalTok{        \textless{}\textless{}enumeration\textgreater{}\textgreater{}}
+\NormalTok{        USER}
+\NormalTok{        ADMIN}
+\NormalTok{    \}}
+    
+\NormalTok{    class ActivityCategory \{}
+\NormalTok{        \textless{}\textless{}enumeration\textgreater{}\textgreater{}}
+\NormalTok{        BIEN\_ETRE}
+\NormalTok{        SPORT}
+\NormalTok{        ART}
+\NormalTok{        AVENTURE}
+\NormalTok{    \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme de classes présente le
+modèle de données de l’application CESIzen. Il montre les entités
+principales (User, Activity, Emotion, etc.) avec leurs attributs et les
+relations entre elles. La notation “1” – “0..*” indique une relation
+un-à-plusieurs, où par exemple un utilisateur peut posséder plusieurs
+résultats de test de stress.
+\end{quote}
+
+\subsubsection{1.3 Diagramme de séquence pour le test de
+stress}\label{diagramme-de-suxe9quence-pour-le-test-de-stress}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sequenceDiagram}
+\NormalTok{    actor User}
+\NormalTok{    participant Page as Page Test Stress}
+\NormalTok{    participant API}
+\NormalTok{    participant DB as Base de données}
+    
+\NormalTok{    User{-}\textgreater{}\textgreater{}Page: Accède à la page de test}
+\NormalTok{    Page{-}\textgreater{}\textgreater{}API: GET /api/stress/questions}
+\NormalTok{    API{-}\textgreater{}\textgreater{}DB: Récupère les questions}
+\NormalTok{    DB{-}{-}\textgreater{}\textgreater{}API: Retourne les questions}
+\NormalTok{    API{-}{-}\textgreater{}\textgreater{}Page: Renvoie les questions}
+\NormalTok{    Page{-}{-}\textgreater{}\textgreater{}User: Affiche les questions}
+    
+\NormalTok{    User{-}\textgreater{}\textgreater{}Page: Sélectionne les événements stressants}
+\NormalTok{    User{-}\textgreater{}\textgreater{}Page: Clique sur "Voir mon résultat"}
+\NormalTok{    Page{-}\textgreater{}\textgreater{}API: POST /api/stress/submit}
+\NormalTok{    API{-}\textgreater{}\textgreater{}DB: Enregistre le résultat du test}
+\NormalTok{    API{-}\textgreater{}\textgreater{}API: Calcule le score de stress}
+\NormalTok{    API{-}{-}\textgreater{}\textgreater{}Page: Renvoie le score et l\textquotesingle{}évaluation}
+\NormalTok{    Page{-}{-}\textgreater{}\textgreater{}User: Affiche le résultat et les recommandations}
+    
+\NormalTok{    \%\% Légende avec note explicative}
+\NormalTok{    note over User,DB: Flux d\textquotesingle{}interaction pour le test de stress}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme de séquence illustre les
+interactions entre l’utilisateur, l’interface, l’API et la base de
+données lors de la réalisation d’un test de stress. Il montre
+chronologiquement comment les données circulent depuis la demande de
+questions jusqu’à l’affichage du résultat final à l’utilisateur.
+\end{quote}
+
+\subsection{2. Analyse fonctionnelle
+détaillée}\label{analyse-fonctionnelle-duxe9tailluxe9e}
+
+\subsubsection{2.1 Module
+d’authentification}\label{module-dauthentification}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s}
+
+\begin{itemize}
+\tightlist
+\item
+  Inscription d’un nouvel utilisateur
+\item
+  Connexion d’un utilisateur existant
+\item
+  Réinitialisation du mot de passe
+\item
+  Gestion des sessions utilisateurs
+\item
+  Séparation des rôles (utilisateur standard, administrateur)
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion}
+
+\begin{itemize}
+\tightlist
+\item
+  Email unique pour chaque utilisateur
+\item
+  Mot de passe sécurisé et haché
+\item
+  Session expirée après une période d’inactivité
+\item
+  Accès aux fonctionnalités administratives limité aux utilisateurs
+  ayant le rôle ADMIN
+\end{itemize}
+
+\subsubsection{2.2 Module de respiration}\label{module-de-respiration}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Sélection d’exercices de respiration prédéfinis
+\item
+  Guidage visuel pour les phases d’inspiration, de rétention et
+  d’expiration
+\item
+  Paramétrage des durées pour chaque phase
+\item
+  Suivi de session (durée, exercices effectués)
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Validation des durées de phase (valeurs positives et cohérentes)
+\item
+  Adaptation de l’interface aux différentes tailles d’écran
+\item
+  Animation fluide pour guider l’utilisateur
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart TD}
+\NormalTok{    A[Utilisateur] {-}{-}\textgreater{} B\{Sélection d\textquotesingle{}exercice\}}
+\NormalTok{    B {-}{-}\textgreater{} C[Respiration 4{-}7{-}8]}
+\NormalTok{    B {-}{-}\textgreater{} D[Respiration 5{-}5]}
+\NormalTok{    B {-}{-}\textgreater{} E[Respiration 4{-}6]}
+    
+\NormalTok{    C {-}{-}\textgreater{} F[Démarrer]}
+\NormalTok{    D {-}{-}\textgreater{} F}
+\NormalTok{    E {-}{-}\textgreater{} F}
+    
+\NormalTok{    F {-}{-}\textgreater{} G\{Phase\}}
+\NormalTok{    G {-}{-}\textgreater{}|Inspiration| H[Cercle s\textquotesingle{}agrandit]}
+\NormalTok{    G {-}{-}\textgreater{}|Rétention| I[Cercle stable]}
+\NormalTok{    G {-}{-}\textgreater{}|Expiration| J[Cercle rétrécit]}
+    
+\NormalTok{    H {-}{-}\textgreater{} G}
+\NormalTok{    I {-}{-}\textgreater{} G}
+\NormalTok{    J {-}{-}\textgreater{} G}
+    
+\NormalTok{    F {-}{-}\textgreater{} K[Arrêter]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme illustre le flux
+d’utilisation du module de respiration. L’utilisateur sélectionne
+d’abord un exercice de respiration, puis démarre la séance. Le système
+guide ensuite l’utilisateur à travers les différentes phases
+(inspiration, rétention, expiration) avec des animations visuelles
+correspondantes.
+\end{quote}
+
+\subsubsection{2.3 Module de tracker de
+stress}\label{module-de-tracker-de-stress}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Test de stress basé sur des événements de vie (questionnaire)
+\item
+  Calcul du score de stress
+\item
+  Historique des tests effectués
+\item
+  Recommandations basées sur le niveau de stress
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Sélection multiple d’événements stressants
+\item
+  Algorithme de calcul du score basé sur la somme des points de chaque
+  événement
+\item
+  Catégorisation du niveau de stress (faible, modéré, élevé)
+\item
+  Stockage sécurisé des résultats associés à l’utilisateur connecté
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stateDiagram{-}v2}
+\NormalTok{    [*] {-}{-}\textgreater{} Étape1}
+\NormalTok{    Étape1 {-}{-}\textgreater{} Étape2 : Suivant}
+\NormalTok{    Étape2 {-}{-}\textgreater{} Étape3 : Suivant}
+\NormalTok{    Étape3 {-}{-}\textgreater{} Étape4 : Suivant}
+\NormalTok{    Étape4 {-}{-}\textgreater{} Calcul : Voir mon résultat}
+    
+\NormalTok{    Étape2 {-}{-}\textgreater{} Étape1 : Précédent}
+\NormalTok{    Étape3 {-}{-}\textgreater{} Étape2 : Précédent}
+\NormalTok{    Étape4 {-}{-}\textgreater{} Étape3 : Précédent}
+    
+\NormalTok{    Calcul {-}{-}\textgreater{} ResultatFaible : Score \textless{} 150}
+\NormalTok{    Calcul {-}{-}\textgreater{} ResultatModéré : 150 ≤ Score \textless{} 300}
+\NormalTok{    Calcul {-}{-}\textgreater{} ResultatÉlevé : Score ≥ 300}
+    
+\NormalTok{    ResultatFaible {-}{-}\textgreater{} [*]}
+\NormalTok{    ResultatModéré {-}{-}\textgreater{} [*]}
+\NormalTok{    ResultatÉlevé {-}{-}\textgreater{} [*]}
+    
+\NormalTok{    note right of Étape1 : Questions 1{-}10}
+\NormalTok{    note right of Étape2 : Questions 11{-}20}
+\NormalTok{    note right of Étape3 : Questions 21{-}30}
+\NormalTok{    note right of Étape4 : Questions 31{-}40}
+    
+\NormalTok{    note left of ResultatFaible : Niveau de stress gérable}
+\NormalTok{    note left of ResultatModéré : Stress significatif}
+\NormalTok{    note left of ResultatÉlevé : Stress élevé {-} Consulter un professionnel}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme d’états représente le
+processus de test de stress dans l’application. L’utilisateur progresse
+à travers quatre étapes de questions, puis obtient un résultat classé
+selon le score total calculé. Les trois catégories de résultat (faible,
+modéré, élevé) déclenchent différentes recommandations adaptées au
+niveau de stress détecté.
+\end{quote}
+
+\subsubsection{2.4 Module de tracker
+d’émotions}\label{module-de-tracker-duxe9motions}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Enregistrement des émotions ressenties
+\item
+  Catégorisation des émotions (émotions principales et sous-émotions)
+\item
+  Historique des émotions enregistrées
+\item
+  Visualisation des tendances émotionnelles
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Structure hiérarchique des émotions (niveau 1: émotions principales,
+  niveau 2: sous-émotions)
+\item
+  Chaque enregistrement peut être commenté
+\item
+  Affichage chronologique des émotions
+\item
+  Regroupement par période (jour, semaine, mois)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart TD}
+\NormalTok{    A[Utilisateur] {-}{-}\textgreater{} B\{Sélection émotion principale\}}
+\NormalTok{    B {-}{-}\textgreater{} Joie}
+\NormalTok{    B {-}{-}\textgreater{} Tristesse}
+\NormalTok{    B {-}{-}\textgreater{} Colère}
+\NormalTok{    B {-}{-}\textgreater{} Peur}
+\NormalTok{    B {-}{-}\textgreater{} Surprise}
+\NormalTok{    B {-}{-}\textgreater{} Dégoût}
+    
+\NormalTok{    Joie {-}{-}\textgreater{} SousJoie\{Sous{-}émotions\}}
+\NormalTok{    SousJoie {-}{-}\textgreater{} Contentement}
+\NormalTok{    SousJoie {-}{-}\textgreater{} Fierté}
+\NormalTok{    SousJoie {-}{-}\textgreater{} Amusement}
+    
+\NormalTok{    Tristesse {-}{-}\textgreater{} SousTristesse\{Sous{-}émotions\}}
+\NormalTok{    SousTristesse {-}{-}\textgreater{} Chagrin}
+\NormalTok{    SousTristesse {-}{-}\textgreater{} Solitude}
+\NormalTok{    SousTristesse {-}{-}\textgreater{} Désespoir}
+    
+\NormalTok{    Colère {-}{-}\textgreater{} SousColère\{Sous{-}émotions\}}
+\NormalTok{    SousColère {-}{-}\textgreater{} Irritation}
+\NormalTok{    SousColère {-}{-}\textgreater{} Fureur}
+\NormalTok{    SousColère {-}{-}\textgreater{} Rancœur}
+    
+\NormalTok{    Contentement {-}{-}\textgreater{} C[Ajout commentaire]}
+\NormalTok{    Chagrin {-}{-}\textgreater{} C}
+\NormalTok{    Irritation {-}{-}\textgreater{} C}
+    
+\NormalTok{    C {-}{-}\textgreater{} D[Enregistrement]}
+\NormalTok{    D {-}{-}\textgreater{} E[Historique des émotions]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme illustre le processus
+d’enregistrement des émotions dans l’application. L’utilisateur
+sélectionne d’abord une émotion principale (joie, tristesse, colère,
+etc.), puis une sous-émotion plus précise. Il peut ensuite ajouter un
+commentaire personnel pour contextualiser son ressenti avant
+d’enregistrer l’entrée dans son historique d’émotions.
+\end{quote}
+
+\subsubsection{2.5 Module d’activités}\label{module-dactivituxe9s}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Catalogue d’activités de bien-être
+\item
+  Filtrage par catégorie, durée et niveau
+\item
+  Ajout d’activités aux favoris
+\item
+  Détails complets sur chaque activité
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Catégorisation des activités (BIEN\_ETRE, SPORT, ART, AVENTURE)
+\item
+  Gestion de la disponibilité des activités (isActive)
+\item
+  Limitation des favoris (pas de doublons)
+\item
+  Affichage adapté selon la disponibilité des équipements
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart LR}
+\NormalTok{    A[Utilisateur] {-}{-}\textgreater{} B[Catalogue d\textquotesingle{}activités]}
+\NormalTok{    B {-}{-}\textgreater{} C\{Filtres\}}
+    
+\NormalTok{    C {-}{-}\textgreater{}|Catégorie| D[BIEN\_ETRE]}
+\NormalTok{    C {-}{-}\textgreater{}|Catégorie| E[SPORT]}
+\NormalTok{    C {-}{-}\textgreater{}|Catégorie| F[ART]}
+\NormalTok{    C {-}{-}\textgreater{}|Catégorie| G[AVENTURE]}
+    
+\NormalTok{    C {-}{-}\textgreater{}|Durée| H[Court \textless{} 30min]}
+\NormalTok{    C {-}{-}\textgreater{}|Durée| I[Moyen 30min{-}1h]}
+\NormalTok{    C {-}{-}\textgreater{}|Durée| J[Long \textgreater{} 1h]}
+    
+\NormalTok{    C {-}{-}\textgreater{}|Niveau| K[Débutant]}
+\NormalTok{    C {-}{-}\textgreater{}|Niveau| L[Intermédiaire]}
+\NormalTok{    C {-}{-}\textgreater{}|Niveau| M[Avancé]}
+    
+\NormalTok{    D {-}{-}\textgreater{} N[Résultats filtrés]}
+\NormalTok{    E {-}{-}\textgreater{} N}
+\NormalTok{    F {-}{-}\textgreater{} N}
+\NormalTok{    G {-}{-}\textgreater{} N}
+\NormalTok{    H {-}{-}\textgreater{} N}
+\NormalTok{    I {-}{-}\textgreater{} N}
+\NormalTok{    J {-}{-}\textgreater{} N}
+\NormalTok{    K {-}{-}\textgreater{} N}
+\NormalTok{    L {-}{-}\textgreater{} N}
+\NormalTok{    M {-}{-}\textgreater{} N}
+    
+\NormalTok{    N {-}{-}\textgreater{} O[Détails activité]}
+\NormalTok{    O {-}{-}\textgreater{} P\{Actions\}}
+\NormalTok{    P {-}{-}\textgreater{}|Ajouter aux favoris| Q[Favoris]}
+\NormalTok{    P {-}{-}\textgreater{}|Retirer des favoris| Q}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme illustre le processus de
+navigation et d’interaction avec le catalogue d’activités. L’utilisateur
+peut filtrer les activités selon trois critères principaux (catégorie,
+durée, niveau de difficulté), consulter les détails d’une activité
+spécifique et gérer ses favoris.
+\end{quote}
+
+\subsubsection{2.6 Module du jardin zen}\label{module-du-jardin-zen}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s-5}
+
+\begin{itemize}
+\tightlist
+\item
+  Interface interactive représentant un jardin zen
+\item
+  Éléments interactifs (bassin, lanterne, pierre, pont)
+\item
+  Ambiance sonore relaxante
+\item
+  Navigation intuitive vers les fonctionnalités de l’application
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion-5}
+
+\begin{itemize}
+\tightlist
+\item
+  Animations fluides et non-intrusives
+\item
+  Réactivité aux interactions utilisateur
+\item
+  Adaptation à différentes tailles d’écran
+\item
+  Sons activables/désactivables
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart TD}
+\NormalTok{    A[Utilisateur] {-}{-}\textgreater{} B[Jardin Zen Interface]}
+\NormalTok{    B {-}{-}\textgreater{} C\{Éléments interactifs\}}
+    
+\NormalTok{    C {-}{-}\textgreater{} D[Bassin]}
+\NormalTok{    C {-}{-}\textgreater{} E[Lanterne]}
+\NormalTok{    C {-}{-}\textgreater{} F[Pierre]}
+\NormalTok{    C {-}{-}\textgreater{} G[Pont]}
+\NormalTok{    C {-}{-}\textgreater{} H[Ambiance sonore]}
+    
+\NormalTok{    D {-}{-}\textgreater{}|Interaction| I[Respiration]}
+\NormalTok{    E {-}{-}\textgreater{}|Interaction| J[Activités]}
+\NormalTok{    F {-}{-}\textgreater{}|Interaction| K[Tracker de stress]}
+\NormalTok{    G {-}{-}\textgreater{}|Interaction| L[Tracker d\textquotesingle{}émotions]}
+\NormalTok{    H {-}{-}\textgreater{}|Toggle| M[Son ON/OFF]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme illustre l’interface du
+jardin zen et ses éléments interactifs. Chaque élément (bassin,
+lanterne, pierre, pont) sert de point d’entrée naturel vers une
+fonctionnalité spécifique de l’application, créant ainsi une navigation
+intuitive et immersive. Le contrôle d’ambiance sonore permet de
+personnaliser l’expérience utilisateur.
+\end{quote}
+
+\subsubsection{2.7 Module de profil
+utilisateur}\label{module-de-profil-utilisateur}
+
+\paragraph{Fonctionnalités}\label{fonctionnalituxe9s-6}
+
+\begin{itemize}
+\tightlist
+\item
+  Affichage des informations du profil
+\item
+  Modification des informations personnelles
+\item
+  Visualisation des activités favorites
+\item
+  Historique des tests de stress et des émotions
+\end{itemize}
+
+\paragraph{Règles de gestion}\label{ruxe8gles-de-gestion-6}
+
+\begin{itemize}
+\tightlist
+\item
+  Validation des données saisies
+\item
+  Protection des données personnelles
+\item
+  Confirmation pour les modifications sensibles
+\item
+  Limitation de l’accès aux seuls utilisateurs concernés
+\end{itemize}
+
+\subsection{3. Analyse technique}\label{analyse-technique}
+
+\subsubsection{3.1 Architecture du projet}\label{architecture-du-projet}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart TD}
+\NormalTok{    \%\% Composants principaux avec couleurs}
+\NormalTok{    A[Frontend] {-}{-}\textgreater{} B[API Routes]}
+\NormalTok{    B {-}{-}\textgreater{} C[Services]}
+\NormalTok{    C {-}{-}\textgreater{} D[Prisma ORM]}
+\NormalTok{    D {-}{-}\textgreater{} E[(Base de données MySQL)]}
+    
+\NormalTok{    \%\% Sous{-}structures}
+\NormalTok{    subgraph Frontend["Frontend (Next.js)"]}
+\NormalTok{        F["Pages (.tsx)"]}
+\NormalTok{        G["Components (.tsx)"]}
+\NormalTok{        H["Assets (images, animations)"]}
+\NormalTok{    end}
+    
+\NormalTok{    subgraph APIRoutes["API Routes (Next.js)"]}
+\NormalTok{        I["Auth API"]}
+\NormalTok{        J["Tracker API"]}
+\NormalTok{        K["Stress API"]}
+\NormalTok{        L["Activities API"]}
+\NormalTok{        M["Admin API"]}
+\NormalTok{    end}
+    
+\NormalTok{    \%\% Relations entre composants}
+\NormalTok{    F {-}{-}\textgreater{} G}
+\NormalTok{    F {-}{-}\textgreater{} H}
+\NormalTok{    A {-}{-}\textgreater{} I}
+\NormalTok{    A {-}{-}\textgreater{} J}
+\NormalTok{    A {-}{-}\textgreater{} K}
+\NormalTok{    A {-}{-}\textgreater{} L}
+\NormalTok{    A {-}{-}\textgreater{} M}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{3.2 Design Patterns
+utilisés}\label{design-patterns-utilisuxe9s}
+
+\paragraph{3.2.1 Pattern MVC
+(Model-View-Controller)}\label{pattern-mvc-model-view-controller}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{classDiagram}
+\NormalTok{    \%\% Classes avec descriptions détaillées}
+\NormalTok{    class Model \{}
+\NormalTok{        +schemasPrisma}
+\NormalTok{        +définit la structure des données}
+\NormalTok{        +gère la persistance}
+\NormalTok{    \}}
+    
+\NormalTok{    class View \{}
+\NormalTok{        +composantsReact}
+\NormalTok{        +pagesNextjs}
+\NormalTok{        +affiche l\textquotesingle{}interface utilisateur}
+\NormalTok{        +réagit aux événements utilisateur}
+\NormalTok{    \}}
+    
+\NormalTok{    class Controller \{}
+\NormalTok{        +routesAPI}
+\NormalTok{        +traiterRequêtes()}
+\NormalTok{        +manipulerDonnées()}
+\NormalTok{        +gère la logique métier}
+\NormalTok{    \}}
+    
+\NormalTok{    \%\% Relations avec descriptions}
+\NormalTok{    Controller {-}{-}\textgreater{} Model : mise à jour}
+\NormalTok{    Controller {-}{-}\textgreater{} View : sélectionne}
+\NormalTok{    View {-}{-}\textgreater{} Model : observe}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{3.2.2 Pattern Factory - Utilisé dans le jardin
+zen}\label{pattern-factory---utilisuxe9-dans-le-jardin-zen}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{classDiagram}
+\NormalTok{    GardenElement \textless{}|{-}{-} Bassin : "hérite"}
+\NormalTok{    GardenElement \textless{}|{-}{-} Stone : "hérite"}
+\NormalTok{    GardenElement \textless{}|{-}{-} Lantern : "hérite"}
+\NormalTok{    GardenElement \textless{}|{-}{-} Bridge : "hérite"}
+\NormalTok{    GardenElementFactory ..\textgreater{} Bassin : "crée"}
+\NormalTok{    GardenElementFactory ..\textgreater{} Stone : "crée"}
+\NormalTok{    GardenElementFactory ..\textgreater{} Lantern : "crée"}
+\NormalTok{    GardenElementFactory ..\textgreater{} Bridge : "crée"}
+    
+\NormalTok{    class GardenElement \{}
+\NormalTok{        \textless{}\textless{}abstract\textgreater{}\textgreater{}}
+\NormalTok{        +render() Element}
+\NormalTok{        +handleInteraction() void}
+\NormalTok{    \}}
+    
+\NormalTok{    class GardenElementFactory \{}
+\NormalTok{        +createElement(type: string) GardenElement}
+\NormalTok{    \}}
+    
+\NormalTok{    class Bassin \{}
+\NormalTok{        +render() Element}
+\NormalTok{        +handleInteraction() void}
+\NormalTok{        +gestionAnimationEau()}
+\NormalTok{    \}}
+    
+\NormalTok{    class Stone \{}
+\NormalTok{        +render() Element}
+\NormalTok{        +handleInteraction() void}
+\NormalTok{        +gestionAnimationPierre()}
+\NormalTok{    \}}
+    
+\NormalTok{    class Lantern \{}
+\NormalTok{        +render() Element}
+\NormalTok{        +handleInteraction() void}
+\NormalTok{        +gestionLumière()}
+\NormalTok{    \}}
+    
+\NormalTok{    class Bridge \{}
+\NormalTok{        +render() Element}
+\NormalTok{        +handleInteraction() void}
+\NormalTok{        +gestionTraversée()}
+\NormalTok{    \}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{3.2.3 Pattern Command - Utilisé pour les interactions dans le
+jardin
+zen}\label{pattern-command---utilisuxe9-pour-les-interactions-dans-le-jardin-zen}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{classDiagram}
+\NormalTok{    Command \textless{}|.. SoundCommand : "implémente"}
+\NormalTok{    Command \textless{}|.. NavigationCommand : "implémente"}
+\NormalTok{    CommandManager o{-}{-}\textgreater{} Command : "utilise"}
+    
+\NormalTok{    class Command \{}
+\NormalTok{        \textless{}\textless{}interface\textgreater{}\textgreater{}}
+\NormalTok{        +execute() void}
+\NormalTok{        +undo() void}
+\NormalTok{    \}}
+    
+\NormalTok{    class CommandManager \{}
+\NormalTok{        {-}history Command[]}
+\NormalTok{        +executeCommand(command: Command) void}
+\NormalTok{        +undoLastCommand() void}
+\NormalTok{        +getCommandHistory() Command[]}
+\NormalTok{    \}}
+    
+\NormalTok{    class SoundCommand \{}
+\NormalTok{        {-}receiver AmbientSound}
+\NormalTok{        {-}previousState boolean}
+\NormalTok{        +execute() void}
+\NormalTok{        +undo() void}
+\NormalTok{    \}}
+    
+\NormalTok{    class NavigationCommand \{}
+\NormalTok{        {-}receiver Router}
+\NormalTok{        {-}destination string}
+\NormalTok{        {-}previousPage string}
+\NormalTok{        +execute() void}
+\NormalTok{        +undo() void}
+\NormalTok{    \}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{3.3 Modèle Conceptuel de Données
+(MCD)}\label{moduxe8le-conceptuel-de-donnuxe9es-mcd}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{erDiagram}
+\NormalTok{    \%\% Entités principales}
+\NormalTok{    USER \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        string name "Nom d\textquotesingle{}utilisateur"}
+\NormalTok{        string email UK "Email unique"}
+\NormalTok{        string password "Mot de passe haché"}
+\NormalTok{        enum role "USER ou ADMIN"}
+\NormalTok{        boolean isActive "Compte actif"}
+\NormalTok{        string resetToken "Token de réinitialisation"}
+\NormalTok{        datetime resetTokenExpires "Date d\textquotesingle{}expiration du token"}
+\NormalTok{        datetime createdAt "Date de création"}
+\NormalTok{        datetime updatedAt "Date de mise à jour"}
+\NormalTok{    \}}
+    
+\NormalTok{    STRESSQUESTION \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        string event UK "Événement stressant"}
+\NormalTok{        int points "Points de stress"}
+\NormalTok{    \}}
+    
+\NormalTok{    STRESSRESULT \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        int userId FK "Référence à l\textquotesingle{}utilisateur"}
+\NormalTok{        int totalScore "Score total de stress"}
+\NormalTok{        datetime createdAt "Date du test"}
+\NormalTok{    \}}
+    
+\NormalTok{    EMOTIONTYPE \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        string name UK "Nom de l\textquotesingle{}émotion"}
+\NormalTok{        int level "Niveau (1=principale, 2=secondaire)"}
+\NormalTok{        int parentId FK "Référence à l\textquotesingle{}émotion parent"}
+\NormalTok{        string color "Couleur principale"}
+\NormalTok{        string bgColor "Couleur de fond"}
+\NormalTok{    \}}
+    
+\NormalTok{    EMOTION \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        int userId FK "Référence à l\textquotesingle{}utilisateur"}
+\NormalTok{        int emotionId FK "Référence au type d\textquotesingle{}émotion"}
+\NormalTok{        datetime date "Date d\textquotesingle{}enregistrement"}
+\NormalTok{        string comment "Commentaire"}
+\NormalTok{    \}}
+    
+\NormalTok{    ACTIVITY \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        string title UK "Titre de l\textquotesingle{}activité"}
+\NormalTok{        string description "Description détaillée"}
+\NormalTok{        enum category "BIEN\_ETRE, SPORT, ART, AVENTURE"}
+\NormalTok{        string duration "Durée estimée"}
+\NormalTok{        string level "Niveau de difficulté"}
+\NormalTok{        string location "Lieu de pratique"}
+\NormalTok{        string equipment "Équipement requis"}
+\NormalTok{        boolean isActive "Disponibilité"}
+\NormalTok{        datetime createdAt "Date de création"}
+\NormalTok{        datetime updatedAt "Date de mise à jour"}
+\NormalTok{    \}}
+    
+\NormalTok{    FAVORITE \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        int userId FK "Référence à l\textquotesingle{}utilisateur"}
+\NormalTok{        int activityId FK "Référence à l\textquotesingle{}activité"}
+\NormalTok{        datetime createdAt "Date d\textquotesingle{}ajout"}
+\NormalTok{    \}}
+    
+\NormalTok{    PAGECONTENT \{}
+\NormalTok{        int id PK "Clé primaire"}
+\NormalTok{        string page UK "Identifiant de page"}
+\NormalTok{        string title "Titre de la page"}
+\NormalTok{        string content "Contenu HTML"}
+\NormalTok{        datetime updatedAt "Date de mise à jour"}
+\NormalTok{    \}}
+    
+\NormalTok{    \%\% Relations}
+\NormalTok{    USER ||{-}{-}o\{ STRESSRESULT : "possède"}
+\NormalTok{    USER ||{-}{-}o\{ EMOTION : "enregistre"}
+\NormalTok{    USER ||{-}{-}o\{ FAVORITE : "possède"}
+\NormalTok{    EMOTIONTYPE ||{-}{-}o\{ EMOTION : "est de type"}
+\NormalTok{    EMOTIONTYPE ||{-}{-}o\{ EMOTIONTYPE : "est parent de"}
+\NormalTok{    ACTIVITY ||{-}{-}o\{ FAVORITE : "est favori"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{4. Gestion des données personnelles et
+sensibles}\label{gestion-des-donnuxe9es-personnelles-et-sensibles}
+
+\subsubsection{4.1 Types de données
+collectées}\label{types-de-donnuxe9es-collectuxe9es}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart TD}
+\NormalTok{    Root[Données personnelles] {-}{-}\textgreater{} ID[Identification]}
+\NormalTok{    Root {-}{-}\textgreater{} Health[Santé et bien{-}être]}
+    
+\NormalTok{    ID {-}{-}\textgreater{} Email[Email]}
+\NormalTok{    ID {-}{-}\textgreater{} Password[Mot de passe]}
+\NormalTok{    ID {-}{-}\textgreater{} Username[Nom d\textquotesingle{}utilisateur]}
+    
+\NormalTok{    Health {-}{-}\textgreater{} Stress[Scores de stress]}
+\NormalTok{    Health {-}{-}\textgreater{} EmotionHistory[Historique émotions]}
+\NormalTok{    Health {-}{-}\textgreater{} Comments[Commentaires émotions]}
+\NormalTok{    Health {-}{-}\textgreater{} Preferences[Préférences activités]}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{4.2 Mesures de protection des
+données}\label{mesures-de-protection-des-donnuxe9es}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart TD}
+\NormalTok{    \%\% Nœud principal}
+\NormalTok{    A[Données personnelles] {-}{-}\textgreater{} B\{Protection\}}
+    
+\NormalTok{    \%\% Branche sécurité technique}
+\NormalTok{    B {-}{-}\textgreater{} C[Sécurité technique]}
+\NormalTok{    C {-}{-}\textgreater{} C1[Hachage des mots de passe]}
+\NormalTok{    C {-}{-}\textgreater{} C2[Authentification sécurisée]}
+\NormalTok{    C {-}{-}\textgreater{} C3[Validation des données]}
+\NormalTok{    C {-}{-}\textgreater{} C4[Tokens à durée limitée]}
+    
+\NormalTok{    \%\% Branche RGPD}
+\NormalTok{    B {-}{-}\textgreater{} D[Conformité RGPD]}
+\NormalTok{    D {-}{-}\textgreater{} D1[Collecte limitée]}
+\NormalTok{    D {-}{-}\textgreater{} D2[Finalités définies]}
+\NormalTok{    D {-}{-}\textgreater{} D3[Conservation limitée]}
+\NormalTok{    D {-}{-}\textgreater{} D4[Droit à l\textquotesingle{}oubli]}
+\NormalTok{    D {-}{-}\textgreater{} D5[Droit d\textquotesingle{}accès]}
+\NormalTok{    D {-}{-}\textgreater{} D6[Droit de rectification]}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{4.3 Architecture de
+sécurité}\label{architecture-de-suxe9curituxe9}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart LR}
+\NormalTok{    \%\% Acteurs et composants}
+\NormalTok{    A([Utilisateur]) {-}{-}\textgreater{}|HTTPS| B[Frontend NextJS]}
+\NormalTok{    B {-}{-}\textgreater{}|HTTPS| C[API Routes]}
+\NormalTok{    C {-}{-}\textgreater{} D\{Middleware d\textquotesingle{}authentification\}}
+\NormalTok{    D {-}{-}\textgreater{}|JWT valide| E[Services métier]}
+\NormalTok{    E {-}{-}\textgreater{}|Requêtes sécurisées| F[(Base de données)]}
+    
+\NormalTok{    \%\% Notes de sécurité}
+\NormalTok{    G[CSRF Protection] {-}.{-} B}
+\NormalTok{    H[Vérification JWT] {-}.{-} D}
+\NormalTok{    I[Données sensibles chiffrées] {-}.{-} F}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{4.4 Flux de données
+sensibles}\label{flux-de-donnuxe9es-sensibles}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sequenceDiagram}
+\NormalTok{    \%\% Acteurs et participants}
+\NormalTok{    actor User as Utilisateur}
+\NormalTok{    participant Frontend as Frontend (Next.js)}
+\NormalTok{    participant API as API Routes}
+\NormalTok{    participant Auth as Service d\textquotesingle{}authentification}
+\NormalTok{    participant DB as Base de données}
+    
+\NormalTok{    \%\% Connexion avec style}
+\NormalTok{    rect rgb(230, 242, 255)}
+\NormalTok{    note right of User: Connexion utilisateur}
+\NormalTok{    User{-}\textgreater{}\textgreater{}Frontend: Saisie email/mot de passe}
+\NormalTok{    Frontend{-}\textgreater{}\textgreater{}API: POST /api/auth/login}
+\NormalTok{    API{-}\textgreater{}\textgreater{}Auth: Vérification des identifiants}
+\NormalTok{    Auth{-}\textgreater{}\textgreater{}DB: Recherche de l\textquotesingle{}utilisateur}
+\NormalTok{    DB{-}{-}\textgreater{}\textgreater{}Auth: Retourne données utilisateur}
+\NormalTok{    Auth{-}\textgreater{}\textgreater{}Auth: Vérifie le hachage du mot de passe}
+\NormalTok{    Auth{-}{-}\textgreater{}\textgreater{}API: Session utilisateur}
+\NormalTok{    API{-}{-}\textgreater{}\textgreater{}Frontend: JWT + Informations utilisateur}
+\NormalTok{    Frontend{-}{-}\textgreater{}\textgreater{}User: Redirection vers dashboard}
+\NormalTok{    end}
+    
+\NormalTok{    \%\% Émotions avec style}
+\NormalTok{    rect rgb(230, 255, 230)}
+\NormalTok{    note right of User: Enregistrement émotion}
+\NormalTok{    User{-}\textgreater{}\textgreater{}Frontend: Sélectionne émotion + commentaire}
+\NormalTok{    Frontend{-}\textgreater{}\textgreater{}API: POST /api/tracker (avec JWT)}
+\NormalTok{    API{-}\textgreater{}\textgreater{}Auth: Vérifie l\textquotesingle{}authentification}
+\NormalTok{    Auth{-}{-}\textgreater{}\textgreater{}API: Utilisateur authentifié}
+\NormalTok{    API{-}\textgreater{}\textgreater{}DB: Enregistre l\textquotesingle{}émotion}
+\NormalTok{    DB{-}{-}\textgreater{}\textgreater{}API: Confirmation}
+\NormalTok{    API{-}{-}\textgreater{}\textgreater{}Frontend: Succès}
+\NormalTok{    Frontend{-}{-}\textgreater{}\textgreater{}User: Affiche confirmation}
+\NormalTok{    end}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{5. Récapitulatif des fonctionnalités par
+module}\label{ruxe9capitulatif-des-fonctionnalituxe9s-par-module}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graph TD}
+\NormalTok{    \%\% Style général}
+\NormalTok{    classDef implemented fill:\#d5e8d4,stroke:\#82b366,stroke{-}width:2px}
+\NormalTok{    classDef pending fill:\#fff2cc,stroke:\#d6b656,stroke{-}width:2px}
+\NormalTok{    classDef moduleStyle fill:\#dae8fc,stroke:\#6c8ebf,stroke{-}width:3px}
+    
+\NormalTok{    \%\% Modules principaux}
+\NormalTok{    Auth[Authentification]:::moduleStyle}
+\NormalTok{    Breath[Respiration]:::moduleStyle}
+\NormalTok{    Stress[Tracker de stress]:::moduleStyle}
+\NormalTok{    Emotion[Tracker d\textquotesingle{}émotions]:::moduleStyle}
+\NormalTok{    Activity[Activités]:::moduleStyle}
+\NormalTok{    Zen[Jardin zen]:::moduleStyle}
+\NormalTok{    Admin[Administration]:::moduleStyle}
+    
+\NormalTok{    \%\% Fonctionnalités d\textquotesingle{}authentification}
+\NormalTok{    Auth {-}{-}\textgreater{} Auth1[Inscription]:::implemented}
+\NormalTok{    Auth {-}{-}\textgreater{} Auth2[Connexion]:::implemented}
+\NormalTok{    Auth {-}{-}\textgreater{} Auth3[Réinitialisation du mot de passe]:::implemented}
+\NormalTok{    Auth {-}{-}\textgreater{} Auth4[Protection des routes]:::implemented}
+\NormalTok{    Auth {-}{-}\textgreater{} Auth5[Gestion des rôles]:::implemented}
+    
+\NormalTok{    \%\% Fonctionnalités de respiration}
+\NormalTok{    Breath {-}{-}\textgreater{} Breath1[Exercices prédéfinis]:::implemented}
+\NormalTok{    Breath {-}{-}\textgreater{} Breath2[Animation cycle respiratoire]:::implemented}
+\NormalTok{    Breath {-}{-}\textgreater{} Breath3[Paramétrage des durées]:::implemented}
+\NormalTok{    Breath {-}{-}\textgreater{} Breath4[Contrôles]:::implemented}
+\NormalTok{    Breath {-}{-}\textgreater{} Breath5[Historique des sessions]:::pending}
+    
+\NormalTok{    \%\% Fonctionnalités de stress}
+\NormalTok{    Stress {-}{-}\textgreater{} Stress1[Questions avec pondération]:::implemented}
+\NormalTok{    Stress {-}{-}\textgreater{} Stress2[Calcul du score]:::implemented}
+\NormalTok{    Stress {-}{-}\textgreater{} Stress3[Évaluation du niveau]:::implemented}
+\NormalTok{    Stress {-}{-}\textgreater{} Stress4[Historique des tests]:::implemented}
+\NormalTok{    Stress {-}{-}\textgreater{} Stress5[Recommandations]:::implemented}
+    
+\NormalTok{    \%\% Fonctionnalités d\textquotesingle{}émotions}
+\NormalTok{    Emotion {-}{-}\textgreater{} Emotion1[Sélection d\textquotesingle{}émotions]:::implemented}
+\NormalTok{    Emotion {-}{-}\textgreater{} Emotion2[Ajout de commentaires]:::implemented}
+\NormalTok{    Emotion {-}{-}\textgreater{} Emotion3[Visualisation chronologique]:::implemented}
+\NormalTok{    Emotion {-}{-}\textgreater{} Emotion4[Suppression d\textquotesingle{}entrées]:::implemented}
+\NormalTok{    Emotion {-}{-}\textgreater{} Emotion5[Analyse des tendances]:::pending}
+    
+\NormalTok{    \%\% Fonctionnalités d\textquotesingle{}activités}
+\NormalTok{    Activity {-}{-}\textgreater{} Activity1[Catalogue catégorisé]:::implemented}
+\NormalTok{    Activity {-}{-}\textgreater{} Activity2[Filtres de recherche]:::implemented}
+\NormalTok{    Activity {-}{-}\textgreater{} Activity3[Système de favoris]:::implemented}
+\NormalTok{    Activity {-}{-}\textgreater{} Activity4[Détails des activités]:::implemented}
+\NormalTok{    Activity {-}{-}\textgreater{} Activity5[Recommandations personnalisées]:::pending}
+    
+\NormalTok{    \%\% Fonctionnalités du jardin zen}
+\NormalTok{    Zen {-}{-}\textgreater{} Zen1[Interface interactive]:::implemented}
+\NormalTok{    Zen {-}{-}\textgreater{} Zen2[Navigation fonctionnalités]:::implemented}
+\NormalTok{    Zen {-}{-}\textgreater{} Zen3[Ambiance sonore]:::implemented}
+\NormalTok{    Zen {-}{-}\textgreater{} Zen4[Animations visuelles]:::implemented}
+\NormalTok{    Zen {-}{-}\textgreater{} Zen5[Éléments personnalisables]:::pending}
+    
+\NormalTok{    \%\% Fonctionnalités d\textquotesingle{}administration}
+\NormalTok{    Admin {-}{-}\textgreater{} Admin1[Gestion des utilisateurs]:::implemented}
+\NormalTok{    Admin {-}{-}\textgreater{} Admin2[Gestion des questions de stress]:::implemented}
+\NormalTok{    Admin {-}{-}\textgreater{} Admin3[Gestion des types d\textquotesingle{}émotions]:::implemented}
+\NormalTok{    Admin {-}{-}\textgreater{} Admin4[Gestion des activités]:::implemented}
+\NormalTok{    Admin {-}{-}\textgreater{} Admin5[Gestion du contenu des pages]:::implemented}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Légende du diagramme} : Ce diagramme de récapitulatif montre
+l’état d’implémentation des fonctionnalités par module. Les rectangles
+verts représentent les fonctionnalités déjà implémentées, tandis que les
+rectangles jaunes indiquent les fonctionnalités prévues mais pas encore
+développées. Chaque module est regroupé avec ses fonctionnalités
+spécifiques pour offrir une vision globale de l’avancement du projet.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\end{document}

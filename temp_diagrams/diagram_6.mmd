@@ -1,0 +1,40 @@
+flowchart TD
+    %% Style des acteurs et cas d'utilisation
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px,color:black
+    classDef usecase fill:#e4f2ff,stroke:#2980b9,stroke-width:1px,rx:8px,ry:8px,color:black
+    classDef include fill:#d5f5e3,stroke:#1abc9c,stroke-width:1px,rx:8px,ry:8px,color:black
+    classDef extend fill:#fdedec,stroke:#e74c3c,stroke-width:1px,rx:8px,ry:8px,color:black
+
+    %% Acteurs
+    User((Utilisateur)):::actor
+    Admin((Administrateur)):::actor
+    
+    %% Cas d'utilisation
+    UC1[Répondre au questionnaire de stress]:::usecase
+    UC2[Consulter son score de stress]:::usecase
+    UC3["Visualiser l'historique des résultats"]:::usecase
+    UC4[Recevoir des recommandations]:::usecase
+    UC5[Gérer les questions de stress]:::usecase
+    UC6[Configurer les niveaux de stress]:::usecase
+    UC7[Consulter les statistiques globales]:::usecase
+    
+    %% Cas d'inclusion et d'extension
+    UC_C[Calculer le score total]:::include
+    UC_A[Analyser les tendances]:::include
+    UC_R[Recommander des activités]:::extend
+    
+    %% Relations utilisateur
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    
+    %% Relations admin
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    
+    %% Inclusion/Extension
+    UC1 -.-> |<<include>>| UC_C
+    UC3 -.-> |<<include>>| UC_A
+    UC2 -.-> |<<extend>>| UC_R

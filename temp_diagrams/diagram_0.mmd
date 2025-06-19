@@ -1,0 +1,162 @@
+classDiagram
+    %% Classes utilisateur et authentification
+    class User {
+        +id: int
+        +name: string
+        +email: string
+        +password: string
+        +role: Role
+        +isActive: boolean
+        +createdAt: datetime
+        +updatePassword(password: string): boolean
+        +validateCredentials(email: string, password: string): boolean
+        +toggleActiveStatus(): void
+    }
+    
+    class Role {
+        <<enumeration>>
+        USER
+        ADMIN
+    }
+
+    %% Classes liées aux émotions
+    class Emotion {
+        +id: int
+        +userId: int
+        +emotionId: int
+        +date: datetime
+        +comment: string
+        +addComment(text: string): void
+    }
+    
+    class EmotionType {
+        +id: int
+        +name: string
+        +level: int
+        +parentId: int
+        +color: string
+        +bgColor: string
+        +getChildren(): EmotionType[]
+    }
+
+    %% Classes liées aux activités
+    class Activity {
+        +id: int
+        +title: string
+        +description: string
+        +category: ActivityCategory
+        +duration: string
+        +level: string
+        +location: string
+        +equipment: string
+        +isActive: boolean
+        +createdAt: datetime
+        +updatedAt: datetime
+        +toggleActiveStatus(): void
+    }
+    
+    class ActivityCategory {
+        <<enumeration>>
+        BIEN_ETRE
+        SPORT
+        ART
+        AVENTURE
+    }
+    
+    class Favorite {
+        +id: int
+        +userId: int
+        +activityId: int
+        +createdAt: datetime
+        +remove(): void
+    }
+
+    %% Classes liées au stress
+    class StressQuestion {
+        +id: int
+        +event: string
+        +points: int
+        +calculateScore(selected: boolean): int
+    }
+    
+    class StressResult {
+        +id: int
+        +userId: int
+        +totalScore: int
+        +createdAt: datetime
+        +getStressLevel(): string
+        +generateRecommendations(): Activity[]
+    }
+
+    %% Classes liées au jardin zen
+    class Garden {
+        +id: string
+        +userId: int
+        +elements: GardenElement[]
+        +addElement(element: GardenElement): void
+        +removeElement(elementId: string): void
+        +moveElement(elementId: string, x: int, y: int): void
+        +save(): void
+        +load(): void
+    }
+    
+    class GardenElement {
+        +id: string
+        +type: string
+        +x: int
+        +y: int
+        +render(): JSX.Element
+    }
+    
+    class CommandManager {
+        -commands: Command[]
+        -currentIndex: int
+        +execute(command: Command): void
+        +undo(): void
+        +redo(): void
+    }
+    
+    class Command {
+        <<interface>>
+        +execute(): void
+        +undo(): void
+    }
+    
+    class MoveElementCommand {
+        -element: GardenElement
+        -oldX: int
+        -oldY: int
+        -newX: int
+        -newY: int
+        +execute(): void
+        +undo(): void
+    }
+
+    %% Classes liées au contenu
+    class PageContent {
+        +id: int
+        +page: string
+        +title: string
+        +content: string
+        +updatedAt: datetime
+        +update(title: string, content: string): void
+    }
+    
+    %% Relations
+    User "1" -- "0..*" Favorite : possède
+    User "1" -- "0..*" Emotion : enregistre
+    User "1" -- "0..*" StressResult : obtient
+    User "1" -- "1" Garden : possède
+    
+    Emotion "*" -- "1" EmotionType : est de type
+    EmotionType "0..1" -- "*" EmotionType : parent de
+    
+    Favorite "*" -- "1" Activity : référence
+    Activity "1" -- "1" ActivityCategory : appartient à
+    
+    Garden "1" -- "*" GardenElement : contient
+    Garden -- CommandManager : utilise
+    CommandManager "1" -- "*" Command : gère
+    Command <|-- MoveElementCommand : implémente
+    
+    StressResult ..> Activity : recommande

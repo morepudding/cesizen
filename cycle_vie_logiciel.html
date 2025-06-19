@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cycle de Vie d'un Logiciel - DevOps Pipeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stage {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .stage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .stage.plan { border-left-color: #3498db; }
+        .stage.develop { border-left-color: #2ecc71; }
+        .stage.build { border-left-color: #f39c12; }
+        .stage.test { border-left-color: #e74c3c; }
+        .stage.release { border-left-color: #9b59b6; }
+        .stage.deploy { border-left-color: #1abc9c; }
+        .stage.monitor { border-left-color: #34495e; }
+
+        .stage-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stage-number {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .stage-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .tools-section {
+            margin-top: 20px;
+        }
+
+        .tools-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 5px;
+        }        .tool {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .tool.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-left: 5px solid #FFD700;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .tool.primary::before {
+            content: "⭐ RECOMMANDÉ";
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #FFD700;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .tool.primary .tool-name {
+            color: white;
+            font-size: 1.3em;
+        }
+
+        .tool.primary .tool-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tool.primary .tool-justification {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 3px solid #FFD700;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .tool-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .alternatives-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+
+        .alternatives-title {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .tool-description {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .tool-justification {
+            background: #e8f5e8;
+            border-left: 3px solid #27ae60;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-style: italic;
+            color: #27ae60;
+        }
+
+        .summary {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .summary-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .benefit {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .benefit h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .benefit p {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .pipeline {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        <div class="header">
+            <h1>🔄 Cycle de Vie Logiciel - Projet CesiZen</h1>
+            <p>Pipeline DevOps adapté pour une application Next.js de bien-être mental</p>
+            <div style="margin-top: 15px; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+                <p><strong>🎯 Contexte :</strong> Application web de gestion du stress et bien-être mental</p>
+                <p><strong>🔧 Stack technique :</strong> Next.js 15, TypeScript, Prisma, MySQL, TailwindCSS</p>
+            </div>
+        </div>
+
+        <div class="pipeline">
+            <!-- Étape 1: Plan -->
+            <div class="stage plan">
+                <div class="stage-header">
+                    <div class="stage-number">1</div>
+                    <div class="stage-title">📋 Plan</div>
+                </div>
+                <p><strong>Objectif :</strong> Planifier les fonctionnalités de bien-être mental, définir l'architecture et organiser les sprints agiles pour CesiZen.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">Jira Software</div>
+                        <div class="tool-description">Gestion agile adaptée aux projets web avec intégration GitHub</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Parfait pour organiser les épics (Gestion stress, Tracker émotions, Jardin zen), tracker les user stories et gérer les sprints de développement Next.js.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">Linear</div>
+                            <div class="tool-description">Interface moderne, parfaite pour équipes produit startup</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">Figma</div>
+                            <div class="tool-description">Prototypage UI/UX pour les interfaces de méditation et stress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 2: Développement -->
+            <div class="stage develop">
+                <div class="stage-header">
+                    <div class="stage-number">2</div>
+                    <div class="stage-title">💻 Développement</div>
+                </div>
+                <p><strong>Objectif :</strong> Développer les composants React pour CesiZen (authentification, tracker stress, exercices respiration) avec TypeScript et Next.js.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">VS Code + Extensions</div>
+                        <div class="tool-description">IDE optimisé pour Next.js/TypeScript avec extensions React et Prisma</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Extensions Next.js, TypeScript, Prisma ORM, TailwindCSS IntelliSense. Debugging intégré pour React et support natif des composants.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">GitHub Desktop</div>
+                            <div class="tool-description">Interface Git visuelle pour commits et pull requests</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">ESLint + Prettier</div>
+                            <div class="tool-description">Standards de code pour TypeScript et React</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 3: Build -->
+            <div class="stage build">
+                <div class="stage-header">
+                    <div class="stage-number">3</div>
+                    <div class="stage-title">🔨 Build</div>
+                </div>
+                <p><strong>Objectif :</strong> Compiler Next.js en production, optimiser les assets et préparer l'application CesiZen pour le déploiement.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">Vercel (Next.js Platform)</div>
+                        <div class="tool-description">Plateforme optimisée pour Next.js avec builds automatiques</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Build automatique dès le push GitHub, optimisations Next.js natives, CDN global, preview deployments pour chaque PR. Parfait pour les apps React.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">GitHub Actions</div>
+                            <div class="tool-description">CI/CD gratuit avec workflows Next.js prédéfinis</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">Docker</div>
+                            <div class="tool-description">Containerisation pour déploiements cohérents</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 4: Test -->
+            <div class="stage test">
+                <div class="stage-header">
+                    <div class="stage-number">4</div>
+                    <div class="stage-title">🧪 Test</div>
+                </div>
+                <p><strong>Objectif :</strong> Tester les composants React, valider les flows utilisateur (stress test, tracker émotions) et vérifier l'intégration Prisma/MySQL.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">Jest + React Testing Library</div>
+                        <div class="tool-description">Framework de test optimal pour applications Next.js/React</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Tests unitaires des composants de stress, tracker émotions et jardin zen. Mocking des API Prisma, snapshots des interfaces UI et tests d'intégration.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">Playwright</div>
+                            <div class="tool-description">Tests E2E pour workflows complets (inscription → test stress)</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">Lighthouse CI</div>
+                            <div class="tool-description">Tests de performance et accessibilité pour le bien-être</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 5: Release -->
+            <div class="stage release">
+                <div class="stage-header">
+                    <div class="stage-number">5</div>
+                    <div class="stage-title">🚀 Release</div>
+                </div>
+                <p><strong>Objectif :</strong> Préparer les versions de CesiZen avec features stables (v1.0: stress test, v1.1: jardin zen, etc.) et gestion des hotfixes.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">GitHub Releases + Semantic Versioning</div>
+                        <div class="tool-description">Releases automatisées avec tags et changelogs générés</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Releases basées sur features (stress v1.0, émotions v1.1), changelogs automatiques, intégration Vercel pour déploiements instantanés par tag.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">Release-it</div>
+                            <div class="tool-description">Automatisation complète des releases npm/GitHub</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">Changesets</div>
+                            <div class="tool-description">Gestion fine des versions pour monorepo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 6: Deploy -->
+            <div class="stage deploy">
+                <div class="stage-header">
+                    <div class="stage-number">6</div>
+                    <div class="stage-title">🌐 Deploy</div>
+                </div>
+                <p><strong>Objectif :</strong> Déployer CesiZen sur Vercel avec base de données MySQL cloud, domaine personnalisé et SSL automatique.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">Vercel + PlanetScale</div>
+                        <div class="tool-description">Déploiement Next.js optimisé avec base MySQL serverless</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Déploiements automatiques dès le push, scaling automatique selon trafic, base MySQL gérée avec branches de développement, edge functions pour l'API.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">Netlify + Supabase</div>
+                            <div class="tool-description">Alternative avec PostgreSQL et auth intégrée</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">Docker + DigitalOcean</div>
+                            <div class="tool-description">Containerisation sur VPS pour plus de contrôle</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 7: Monitor -->
+            <div class="stage monitor">
+                <div class="stage-header">
+                    <div class="stage-number">7</div>
+                    <div class="stage-title">📊 Monitor</div>
+                </div>
+                <p><strong>Objectif :</strong> Surveiller l'usage de CesiZen (tests de stress réalisés, sessions méditation, erreurs), analyser le bien-être des utilisateurs.</p>
+                  <div class="tools-section">
+                    <div class="tools-title">🛠️ Outil Principal</div>
+                    
+                    <div class="tool primary">                        <div class="tool-name">Vercel Analytics + Sentry</div>
+                        <div class="tool-description">Monitoring intégré Next.js avec gestion d'erreurs React</div>
+                        <div class="tool-justification">
+                            <strong>Pourquoi pour CesiZen :</strong> Analytics Web Vitals pour UX, tracking des conversions (inscription → test stress), monitoring erreurs React/Next.js, dashboards de well-being des utilisateurs.
+                        </div>
+                    </div>
+
+                    <div class="alternatives-section">                        <div class="alternatives-title">🔄 Alternatives pour CesiZen</div>
+                        
+                        <div class="tool">
+                            <div class="tool-name">Google Analytics 4</div>
+                            <div class="tool-description">Analyse comportementale approfondie des utilisateurs</div>
+                        </div>
+
+                        <div class="tool">
+                            <div class="tool-name">LogRocket</div>
+                            <div class="tool-description">Replay sessions pour débugger l'UX</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        <div class="summary">
+            <h2>💡 Bénéfices de cette Approche DevOps pour CesiZen</h2>
+            <div class="summary-content">
+                <div class="benefit">
+                    <h3>🧘 Déploiements Zen</h3>
+                    <p>Pipeline automatisé permettant des mises à jour fréquentes des fonctionnalités de bien-être sans stress pour l'équipe de développement.</p>
+                </div>
+                <div class="benefit">
+                    <h3>🔍 Qualité Thérapeutique</h3>
+                    <p>Tests automatisés garantissent que les fonctionnalités critiques (test de stress, tracker émotions) fonctionnent parfaitement pour les utilisateurs.</p>
+                </div>
+                <div class="benefit">
+                    <h3>🤝 Collaboration Harmonieuse</h3>
+                    <p>Outils spécialisés Next.js/React facilitent la collaboration entre designers UX et développeurs pour une expérience utilisateur optimale.</p>
+                </div>
+                <div class="benefit">
+                    <h3>📈 Scaling du Bien-être</h3>
+                    <p>Infrastructure Vercel permet de gérer l'augmentation des utilisateurs cherchant du soutien en santé mentale sans impact sur les performances.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
