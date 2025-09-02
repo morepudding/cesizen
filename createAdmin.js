@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 async function createAdmin() {
   try {
-    console.log("✅ Creating admin...");
+    console.log("✅ Creating adminn...");
 
     const hashedPassword = await bcrypt.hash("admin123", 10);
 
