@@ -1,19 +1,17 @@
-const validator = require('validator');
-const DOMPurify = require('isomorphic-dompurify');
+import validator from 'validator';
+import DOMPurify from 'isomorphic-dompurify';
 
 class InputValidator {
-    constructor() {
-        this.sqlPatterns = [
-            /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION)\b)/gi,
-            /(--|\#|\/\*|\*\/)/g,
-            /(\b(OR|AND)\b.*=.*)/gi
+    constructor() {        this.sqlPatterns = [
+            /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION)\b)/i,
+            /(--|\#|\/\*|\*\/)/,
+            /(\b(OR|AND)\b.*=.*)/i
         ];
-        
-        this.xssPatterns = [
-            /<script[^>]*>.*<\/script>/gi,
-            /javascript:/gi,
-            /on\w+\s*=/gi,
-            /<iframe[^>]*>.*<\/iframe>/gi
+          this.xssPatterns = [
+            /<script[^>]*>.*<\/script>/i,
+            /javascript:/i,
+            /on\w+\s*=/i,
+            /<iframe[^>]*>.*<\/iframe>/i
         ];
     }
 
@@ -117,4 +115,5 @@ class InputValidator {
     }
 }
 
-module.exports = new InputValidator();
+const inputValidator = new InputValidator();
+export default inputValidator;

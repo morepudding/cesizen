@@ -1,4 +1,4 @@
-const redis = require('redis');
+import redis from 'redis';
 const client = redis.createClient();
 
 class RateLimiter {
@@ -90,4 +90,5 @@ class RateLimiter {
     }
 }
 
-module.exports = new RateLimiter();
+const rateLimiter = new RateLimiter();
+export default rateLimiter;

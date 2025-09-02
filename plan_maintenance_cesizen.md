@@ -226,9 +226,7 @@ Ces améliorations techniques visent à maintenir la performance et la sécurit�
 #### Cycle de Développement Agile
 
 Ce processus agile garantit des livraisons régulières et alignées sur les besoins utilisateurs.
-
-**🔄 Workflow de Développement :**
-1. 📋 **Planification** → Roadmap trimestrielle avec priorisation des features
+kication** → Roadmap trimestrielle avec priorisation des features
 2. 🔬 **Recherche** → Analyse des besoins utilisateurs et benchmarking concurrentiel
 3. 🎨 **Design** → Prototypes UX/UI et validation avec feedback utilisateurs
 4. 👨‍💻 **Développement** → Sprints de 2 semaines avec reviews quotidiennes

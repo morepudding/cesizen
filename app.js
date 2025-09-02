@@ -1,15 +1,20 @@
-const express = require('express');
+import express from 'express';
+
 const app = express();
 
 // Importation des middlewares de sécurité
-const bruteForceProtection = require('./security/BruteForceProtection');
-const rateLimiter = require('./security/RateLimiter');
-const inputValidator = require('./security/InputValidator');
-const securityLogger = require('./security/SecurityLogger');
+import bruteForceProtection from './security/BruteForceProtection.js';
+import rateLimiter from './security/RateLimiter.js';
+import inputValidator from './security/InputValidator.js';
+import securityLogger from './security/SecurityLogger.js';
+import csrfProtection from './security/CSRFProtection.js';
+import corsConfig from './security/CORSConfig.js';
 
-// Middlewares de sécurité (à placer avant les routes)
-app.use(securityLogger.middleware());
-app.use(inputValidator.middleware());
+// Middlewares de sécurité (ordre important)
+app.use(corsConfig.middleware());           // CORS en premier
+app.use(securityLogger.middleware());       // Logging de sécurité
+app.use(inputValidator.middleware());       // Validation des entrées
+app.use(csrfProtection.middleware());       // Protection CSRF
 app.use(rateLimiter.middleware('global'));
 
 // Protection spécifique pour les routes de login
@@ -29,4 +34,4 @@ app.use(async (req, res, next) => {
 
 // ...existing code...
 
-module.exports = app;
+export default app;

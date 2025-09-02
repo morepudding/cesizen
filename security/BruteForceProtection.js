@@ -1,4 +1,4 @@
-const redis = require('redis');
+import redis from 'redis';
 const client = redis.createClient();
 
 class BruteForceProtection {
@@ -74,4 +74,5 @@ class BruteForceProtection {
     }
 }
 
-module.exports = new BruteForceProtection();
+const bruteForceProtection = new BruteForceProtection();
+export default bruteForceProtection;

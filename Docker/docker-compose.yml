@@ -1,0 +1,54 @@
+
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - MYSQL_PASSWORD=p@ssw0rd
+      - MYSQL_USER=dvwa
+      - MYSQL_DATABASE=dvwa
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    container_name: dvwa-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: p@ssw0rd
+    ports:
+      - "3308:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dvwa-phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=mysql
+
+  juiceshop:
+    image: bkimminich/juice-shop
+    container_name: juice-shop
+    restart: always
+    ports:
+      - "3000:3000"
+
+  python:
+    image: python:3.10-slim
+    container_name: python-lab
+    restart: always
+    command: tail -f /dev/null
+    volumes:
+      - ./python-lab:/app
+
+networks:
+  default:
+    name: inf48-net
