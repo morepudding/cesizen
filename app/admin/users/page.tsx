@@ -23,12 +23,30 @@ export default function UsersAdminPage() {
   };
 
   const handleDeleteUser = async (id: number) => {
-    await fetch("/api/admin/users", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    fetchUsers();
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.")) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/admin/users", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(`Erreur lors de la suppression : ${data.error || 'Erreur inconnue'}`);
+        return;
+      }
+
+      alert(data.message || "Utilisateur supprimé avec succès");
+      fetchUsers(); // Recharger la liste des utilisateurs
+    } catch (error) {
+      console.error("Erreur lors de la suppression:", error);
+      alert("Erreur de connexion lors de la suppression de l'utilisateur");
+    }
   };
 
   if (status === "loading") return <p>Chargement...</p>;

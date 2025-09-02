@@ -14,7 +14,43 @@ export async function GET() {
 }
 
 export async function DELETE(req: Request) {
-  const { id } = await req.json();
-  await prisma.user.delete({ where: { id: Number(id) } });
-  return NextResponse.json({ message: "Utilisateur supprimé." });
+  try {
+    // Vérification de l'authentification et des permissions
+    const session = await getServerSession(authOptions);
+    if (!session || session.user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Accès non autorisé" }, { status: 403 });
+    }
+
+    const body = await req.json();
+    const { id } = body;
+
+    // Validation de l'ID
+    if (!id || isNaN(Number(id))) {
+      return NextResponse.json({ error: "ID utilisateur invalide" }, { status: 400 });
+    }
+
+    const userId = Number(id);
+
+    // Vérifier que l'utilisateur existe avant de le supprimer
+    const existingUser = await prisma.user.findUnique({ where: { id: userId } });
+    if (!existingUser) {
+      return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 });
+    }
+
+    // Empêcher la suppression de son propre compte
+    if (session.user.id === userId.toString()) {
+      return NextResponse.json({ error: "Vous ne pouvez pas supprimer votre propre compte" }, { status: 400 });
+    }
+
+    // Supprimer l'utilisateur
+    await prisma.user.delete({ where: { id: userId } });
+    return NextResponse.json({ message: "Utilisateur supprimé avec succès." });
+
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'utilisateur:", error);
+    return NextResponse.json(
+      { error: "Erreur interne du serveur lors de la suppression" }, 
+      { status: 500 }
+    );
+  }
 }
