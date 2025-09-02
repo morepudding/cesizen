@@ -42,8 +42,21 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: "Vous ne pouvez pas supprimer votre propre compte" }, { status: 400 });
     }
 
-    // Supprimer l'utilisateur
-    await prisma.user.delete({ where: { id: userId } });
+    // Supprimer l'utilisateur et toutes ses données associées dans une transaction
+    await prisma.$transaction(async (tx) => {
+      // Supprimer d'abord les favoris (c'est là qu'était l'erreur initiale)
+      await tx.favorite.deleteMany({ where: { userId } });
+      
+      // Supprimer les résultats de stress
+      await tx.stressResult.deleteMany({ where: { userId } });
+      
+      // Supprimer les émotions
+      await tx.emotion.deleteMany({ where: { userId } });
+      
+      // Enfin, supprimer l'utilisateur
+      await tx.user.delete({ where: { id: userId } });
+    });
+    
     return NextResponse.json({ message: "Utilisateur supprimé avec succès." });
 
   } catch (error) {
