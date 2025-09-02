@@ -50,8 +50,6 @@ model UserEmotion {
   comment     String?
   emotionType EmotionType @relation("EmotionToType", fields: [emotionId], references: [id])
   user        User        @relation(fields: [userId], references: [id])
-
-  @@map("Emotion")
 }
 
 model Result {

@@ -43,10 +43,28 @@ export default function EmotionTracker() {
   }, []);
 
   const fetchEmotions = async () => {
-    const res = await fetch("/api/tracker/emotions");
-    const data = await res.json();
-    console.log("Émotions reçues:", data);
-    setUserEmotions(data);
+    try {
+      const res = await fetch("/api/tracker/emotions");
+      const data = await res.json();
+      console.log("Émotions reçues:", data);
+      
+      if (!res.ok) {
+        console.error("Erreur lors de la récupération des émotions:", data);
+        setUserEmotions([]); // Assurer qu'on a toujours un tableau
+        return;
+      }
+      
+      // Vérifier que data est un tableau
+      if (Array.isArray(data)) {
+        setUserEmotions(data);
+      } else {
+        console.error("Les données reçues ne sont pas un tableau:", data);
+        setUserEmotions([]);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des émotions:", error);
+      setUserEmotions([]);
+    }
   };
 
   const fetchEmotionTypes = async () => {
