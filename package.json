@@ -11,6 +11,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
+    "create-admin": "tsx scripts/create-admin.ts",
     "seed": "tsx prisma/seed.ts",
     "security-test": "node security/security-tests.js",
     "security-test-ps": "powershell -ExecutionPolicy Bypass -File security/security-test.ps1"
