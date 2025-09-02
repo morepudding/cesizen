@@ -1,12 +1,33 @@
 "use client";
+import dynamic from "next/dynamic";
 import Hero from "../components/Hero";
-import InteractiveBassin from "../components/InteractiveBassin";
-import InteractiveStone from "../components/InteractiveStone";
-import InteractiveLantern from "../components/InteractiveLantern";
-import InteractiveBridge from "../components/InteractiveBridge";
-import InteractiveProfile from "../components/InteractiveProfile";
-import InteractiveFAQ from "../components/InteractiveFAQ";
-import AmbientSound from "../components/AmbientSound";
+
+// Import dynamique des composants utilisant Lottie pour éviter les erreurs SSR
+const InteractiveBassin = dynamic(() => import("../components/InteractiveBassin"), { 
+  ssr: false,
+  loading: () => <div className="w-24 h-24 bg-blue-100 rounded-full animate-pulse"></div>
+});
+const InteractiveStone = dynamic(() => import("../components/InteractiveStone"), { 
+  ssr: false,
+  loading: () => <div className="w-24 h-24 bg-gray-100 rounded-full animate-pulse"></div>
+});
+const InteractiveLantern = dynamic(() => import("../components/InteractiveLantern"), { 
+  ssr: false,
+  loading: () => <div className="w-24 h-24 bg-yellow-100 rounded-full animate-pulse"></div>
+});
+const InteractiveBridge = dynamic(() => import("../components/InteractiveBridge"), { 
+  ssr: false,
+  loading: () => <div className="w-24 h-24 bg-green-100 rounded-full animate-pulse"></div>
+});
+const InteractiveProfile = dynamic(() => import("../components/InteractiveProfile"), { 
+  ssr: false,
+  loading: () => <div className="w-24 h-24 bg-purple-100 rounded-full animate-pulse"></div>
+});
+const InteractiveFAQ = dynamic(() => import("../components/InteractiveFAQ"), { 
+  ssr: false,
+  loading: () => <div className="w-24 h-24 bg-red-100 rounded-full animate-pulse"></div>
+});
+const AmbientSound = dynamic(() => import("../components/AmbientSound"), { ssr: false });
 
 export default function HomePage() {
   return (

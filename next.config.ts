@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     // Ignore les erreurs TypeScript durant le build
     ignoreBuildErrors: true,
   },
+  experimental: {
+    esmExternals: true,
+  },
+  transpilePackages: ['lottie-react'],
 };
 
 export default nextConfig;

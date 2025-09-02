@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Lottie from "lottie-react";
+import LottieWrapper from "./LottieWrapper";
 import bassinAnimation from "../assets/bassinAnimation.json"; // ajuste le chemin si nécessaire
 
 export default function InteractiveBassin() {
@@ -16,11 +16,11 @@ export default function InteractiveBassin() {
         whileHover={{ scale: 1.1 }}
         onClick={() => setShowInfo((prev) => !prev)}
       >
-        <Lottie 
+        <LottieWrapper 
           animationData={bassinAnimation} 
-          autoPlay={showInfo} 
+          autoplay={showInfo} 
           loop={showInfo}
-          style={{ width: "100%", height: "100%" }} 
+          className="w-full h-full"
         />
       </motion.div>
       {showInfo && (
