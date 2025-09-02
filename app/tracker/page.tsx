@@ -28,7 +28,7 @@ interface EmotionType {
 }
 
 export default function EmotionTracker() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [userEmotions, setUserEmotions] = useState<Emotion[]>([]);
   const [emotionTypes, setEmotionTypes] = useState<EmotionType[]>([]);
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
@@ -59,19 +59,29 @@ export default function EmotionTracker() {
   const handleAddEmotion = async () => {
     if (!selectedEmotion) return;
 
-    const response = await fetch("/api/tracker/emotions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ emotionId: selectedEmotion, comment }),
-    });
+    try {
+      const response = await fetch("/api/tracker/emotions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emotionId: selectedEmotion, comment }),
+      });
 
-    if (!response.ok) return;
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Erreur lors de l'ajout de l'émotion:", errorData);
+        // Vous pourriez ajouter ici un toast ou une notification d'erreur
+        return;
+      }
 
-    const newEmotion = await response.json();
-    setUserEmotions((prev) => [newEmotion, ...prev]);
-    setComment("");
-    setSelectedEmotion(null);
-    setIsAddingEmotion(false);
+      const newEmotion = await response.json();
+      setUserEmotions((prev) => [newEmotion, ...prev]);
+      setComment("");
+      setSelectedEmotion(null);
+      setIsAddingEmotion(false);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de l'émotion:", error);
+      // Vous pourriez ajouter ici un toast ou une notification d'erreur
+    }
   };
 
   const handleDeleteEmotion = async (emotionId: number) => {

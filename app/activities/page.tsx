@@ -65,6 +65,12 @@ export default function ActivitiesPage() {
         body: JSON.stringify({ activityId }),
       });
   
+      if (response.status === 409) {
+        // L'activité est déjà en favori, pas besoin de lancer une erreur
+        console.log("L'activité est déjà en favori");
+        return; // Sortie silencieuse
+      }
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({})); // ✅ Gérer le cas où la réponse est vide
         throw new Error(errorData.error || "Erreur lors de l'ajout aux favoris.");
@@ -228,7 +234,7 @@ export default function ActivitiesPage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 italic">Vous n'avez pas encore de favoris.</p>
+                  <p className="text-gray-500 italic">Vous n&apos;avez pas encore de favoris.</p>
                 )}
               </div>
             </div>

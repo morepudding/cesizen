@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
   const emotions = await prisma.emotion.findMany({
     where: {
-      userId: session.user.id,
+      userId: Number(session.user.id),
       date: dateFilter,
     },
     include: { 
