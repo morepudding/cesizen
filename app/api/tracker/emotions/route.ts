@@ -4,43 +4,53 @@ import { authOptions } from "@/lib/authOptions";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
-  const url = new URL(req.url);
-  const filter = url.searchParams.get("filter");
+    console.log("Session user ID:", session.user.id);
 
-  let dateFilter = {};
+    const url = new URL(req.url);
+    const filter = url.searchParams.get("filter");
 
-  if (filter === "day") {
-    dateFilter = { gte: new Date(new Date().setHours(0, 0, 0, 0)) };
-  } else if (filter === "week") {
-    const weekStart = new Date();
-    weekStart.setDate(weekStart.getDate() - 7);
-    dateFilter = { gte: weekStart };
-  } else if (filter === "month") {
-    const monthStart = new Date();
-    monthStart.setDate(1);
-    dateFilter = { gte: monthStart };
-  }
+    let dateFilter = {};
 
-  const emotions = await prisma.emotion.findMany({
-    where: {
-      userId: Number(session.user.id),
-      date: dateFilter,
-    },
-    include: { 
-      emotionType: {
-        include: {
-          parent: true
+    if (filter === "day") {
+      dateFilter = { gte: new Date(new Date().setHours(0, 0, 0, 0)) };
+    } else if (filter === "week") {
+      const weekStart = new Date();
+      weekStart.setDate(weekStart.getDate() - 7);
+      dateFilter = { gte: weekStart };
+    } else if (filter === "month") {
+      const monthStart = new Date();
+      monthStart.setDate(1);
+      dateFilter = { gte: monthStart };
+    }
+
+    console.log("Date filter:", dateFilter);
+    console.log("Looking for emotions with userId:", Number(session.user.id));
+
+    const emotions = await prisma.emotion.findMany({
+      where: {
+        userId: Number(session.user.id),
+        date: dateFilter,
+      },
+      include: { 
+        emotionType: {
+          include: {
+            parent: true
+          }
         }
-      }
-    },
-    orderBy: { date: "desc" },
-  });
+      },
+      orderBy: { date: "desc" },
+    });
 
-  console.log("Émotions récupérées:", emotions);
-  return NextResponse.json(emotions);
+    console.log("Émotions récupérées:", emotions);
+    return NextResponse.json(emotions);
+  } catch (error) {
+    console.error("Erreur dans GET /api/tracker/emotions:", error);
+    return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 });
+  }
 }
 
 
