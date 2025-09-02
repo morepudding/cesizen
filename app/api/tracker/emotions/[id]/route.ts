@@ -22,9 +22,7 @@ export async function DELETE(
     const emotion = await prisma.emotion.findFirst({
       where: {
         id: emotionId,
-        user: {
-          email: session.user.email,
-        },
+        userId: Number(session.user.id),
       },
     });
 

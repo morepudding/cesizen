@@ -39,10 +39,10 @@ model User {
   stressResults     StressResult[]   @relation("UserStressResults")
   tickets           Ticket[]
   ticketResponses   TicketResponse[]
-  userEmotions      UserEmotion[]
+  emotions          Emotion[]
 }
 
-model UserEmotion {
+model Emotion {
   id          Int         @id @default(autoincrement())
   userId      Int
   emotionId   Int
@@ -50,8 +50,6 @@ model UserEmotion {
   comment     String?
   emotionType EmotionType @relation("EmotionToType", fields: [emotionId], references: [id])
   user        User        @relation(fields: [userId], references: [id])
-
-  @@map("Emotion")
 }
 
 model Result {
@@ -71,7 +69,7 @@ model EmotionType {
   bgColor      String?
   parent       EmotionType?  @relation("EmotionHierarchy", fields: [parentId], references: [id])
   children     EmotionType[] @relation("EmotionHierarchy")
-  userEmotions UserEmotion[] @relation("EmotionToType")
+  emotions     Emotion[]     @relation("EmotionToType")
 }
 
 model Ticket {

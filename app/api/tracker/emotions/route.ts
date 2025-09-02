@@ -30,7 +30,7 @@ export async function GET(req: Request) {
     console.log("Date filter:", dateFilter);
     console.log("Looking for emotions with userId:", Number(session.user.id));
 
-    const emotions = await (prisma as any).userEmotion.findMany({
+    const emotions = await prisma.emotion.findMany({
       where: {
         userId: Number(session.user.id),
         date: dateFilter,
@@ -88,7 +88,7 @@ export async function POST(req: Request) {
       comment: comment || null
     });
 
-    const newEmotion = await (prisma as any).userEmotion.create({
+    const newEmotion = await prisma.emotion.create({
       data: {
         emotionId: Number(emotionId),
         userId: Number(session.user.id),
