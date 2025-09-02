@@ -12,6 +12,26 @@ enum Role {
   ADMIN
 }
 
+enum TicketStatus {
+  OUVERT
+  EN_COURS
+  RESOLU
+  FERME
+}
+
+enum TicketPriority {
+  BASSE
+  MOYENNE
+  HAUTE
+}
+
+enum TicketType {
+  BUG
+  AIDE
+  SUGGESTION
+  AUTRE
+}
+
 model StressQuestion {
   id     Int    @id @default(autoincrement())
   event  String @unique
@@ -40,6 +60,8 @@ model User {
   userEmotions  UserEmotion[]
   results       Result[]
   stressResults StressResult[] @relation("UserStressResults")
+  tickets       Ticket[]
+  ticketResponses TicketResponse[]
   isActive      Boolean       @default(true)
   resetToken     String?
   resetTokenExpires DateTime?
@@ -73,6 +95,31 @@ model EmotionType {
   userEmotions UserEmotion[] @relation("EmotionToType")
   color    String?  // Couleur de l'émotion (uniquement pour niveau 1)
   bgColor  String?  // Couleur de fond de l'émotion (uniquement pour niveau 1)
+}
+
+model Ticket {
+  id          Int             @id @default(autoincrement())
+  subject     String
+  description String
+  type        TicketType
+  priority    TicketPriority  @default(MOYENNE)
+  status      TicketStatus    @default(OUVERT)
+  userId      Int
+  user        User            @relation(fields: [userId], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  responses   TicketResponse[]
+}
+
+model TicketResponse {
+  id        Int      @id @default(autoincrement())
+  message   String
+  isAdmin   Boolean  @default(false)
+  ticketId  Int
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 enum ActivityCategory {

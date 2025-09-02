@@ -74,6 +74,13 @@ function Navbar() {
             FAQ
           </Link>
         </li>
+        {session && (
+          <li>
+            <Link href="/support" className="hover:text-green-600 transition">
+              Support
+            </Link>
+          </li>
+        )}
         <li>
           <Link href="/zenGarden" className="hover:text-green-600 transition">
             Jardin Zen
