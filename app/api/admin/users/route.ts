@@ -44,14 +44,26 @@ export async function DELETE(req: Request) {
 
     // Supprimer l'utilisateur et toutes ses données associées dans une transaction
     await prisma.$transaction(async (tx) => {
-      // Supprimer d'abord les favoris (c'est là qu'était l'erreur initiale)
-      await tx.favorite.deleteMany({ where: { userId } });
+      try {
+        // Supprimer les favoris
+        await tx.favorite.deleteMany({ where: { userId } });
+      } catch (error) {
+        console.warn("Erreur lors de la suppression des favoris:", error);
+      }
       
-      // Supprimer les résultats de stress
-      await tx.stressResult.deleteMany({ where: { userId } });
+      try {
+        // Supprimer les résultats de stress
+        await tx.stressResult.deleteMany({ where: { userId } });
+      } catch (error) {
+        console.warn("Erreur lors de la suppression des résultats de stress:", error);
+      }
       
-      // Supprimer les émotions
-      await tx.emotion.deleteMany({ where: { userId } });
+      try {
+        // Supprimer les émotions
+        await tx.emotion.deleteMany({ where: { userId } });
+      } catch (error) {
+        console.warn("Erreur lors de la suppression des émotions:", error);
+      }
       
       // Enfin, supprimer l'utilisateur
       await tx.user.delete({ where: { id: userId } });
