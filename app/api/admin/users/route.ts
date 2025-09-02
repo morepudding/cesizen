@@ -58,13 +58,6 @@ export async function DELETE(req: Request) {
         console.warn("Erreur lors de la suppression des résultats de stress:", error);
       }
       
-      try {
-        // Supprimer les émotions
-        await tx.emotion.deleteMany({ where: { userId } });
-      } catch (error) {
-        console.warn("Erreur lors de la suppression des émotions:", error);
-      }
-      
       // Enfin, supprimer l'utilisateur
       await tx.user.delete({ where: { id: userId } });
     });
