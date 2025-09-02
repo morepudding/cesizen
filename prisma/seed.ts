@@ -241,7 +241,7 @@ const createAdminUser = async () => {
       email: 'admin@cesizen.com',
       password: hashedPassword,
       name: 'Admin',
-      role: 'admin'
+      role: 'ADMIN'
     }
   });
   console.log('✅ Utilisateur admin créé');
@@ -255,7 +255,7 @@ async function main() {
   await prisma.favorite.deleteMany();
   await prisma.activity.deleteMany();
   await prisma.stressQuestion.deleteMany();
-  await prisma.emotion.deleteMany();
+  await prisma.userEmotion.deleteMany();
   await prisma.emotionType.deleteMany();
   await prisma.user.deleteMany();
 
