@@ -41,10 +41,12 @@ export async function POST(request: Request) {
       status: "OUVERT",
       userId: user.id,
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       user: {
         name: user.name,
         email: user.email
-      }
+      },
+      responses: []
     };
 
     console.log("📝 Ticket simulé créé:", mockTicket);
@@ -94,10 +96,12 @@ export async function GET() {
         status: "OUVERT",
         userId: user.id,
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         user: {
           name: user.name,
           email: user.email
-        }
+        },
+        responses: []
       }
     ];
 

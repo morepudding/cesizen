@@ -11,7 +11,7 @@ type Ticket = {
   priority: string;
   status: string;
   createdAt: string;
-  responses: Array<{
+  responses?: Array<{
     id: number;
     message: string;
     isAdmin: boolean;
@@ -51,10 +51,15 @@ export default function SupportPage() {
       const response = await fetch("/api/tickets");
       const data = await response.json();
       if (response.ok) {
-        setTickets(data.tickets);
+        // L'API retourne directement un tableau, pas un objet avec .tickets
+        setTickets(Array.isArray(data) ? data : []);
+      } else {
+        console.error("Erreur API:", data.error);
+        setTickets([]);
       }
     } catch (error) {
       console.error("Erreur chargement tickets:", error);
+      setTickets([]);
     }
     setLoading(false);
   };
@@ -253,7 +258,7 @@ export default function SupportPage() {
                     <div className="text-sm text-gray-500">
                       Créé le {new Date(ticket.createdAt).toLocaleDateString("fr-FR")}
                     </div>
-                    {ticket.responses.length > 0 && (
+                    {ticket.responses && ticket.responses.length > 0 && (
                       <div className="mt-3 pl-4 border-l-2 border-blue-200">
                         <p className="text-sm text-blue-600 font-medium">
                           {ticket.responses.length} réponse(s)
