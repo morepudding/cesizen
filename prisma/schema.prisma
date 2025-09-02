@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model StressQuestion {
   id     Int    @id @default(autoincrement())
   event  String @unique
@@ -22,7 +27,7 @@ model StressResult {
 }
 
 model User {
-id            Int            @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   name          String?
   email         String?        @unique
   emailVerified DateTime?
@@ -32,21 +37,30 @@ id            Int            @id @default(autoincrement())
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   favorites     Favorite[]
-  emotions      UserEmotion[]
+  userEmotions  UserEmotion[]
   results       Result[]
+  stressResults StressResult[] @relation("UserStressResults")
   isActive      Boolean       @default(true)
   resetToken     String?
   resetTokenExpires DateTime?
 }
 
-model Emotion {
+model UserEmotion {
   id          Int      @id @default(autoincrement())
-  userId      Int?
-  user        User?    @relation(fields: [userId], references: [id], name: "UserEmotions")
-  emotionId   Int      // ✅ L'émotion choisie parmi EmotionType
-  emotionType EmotionType @relation(fields: [emotionId], references: [id], name: "EmotionToType") // ✅ Ajout du nom de relation
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  emotionId   Int      
+  emotionType EmotionType @relation(fields: [emotionId], references: [id], name: "EmotionToType")
   date        DateTime @default(now())
-  comment     String?       // ✅ Nouveau champ pour le commentaire
+  comment     String?
+}
+
+model Result {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  totalScore Int
+  createdAt  DateTime @default(now())
 }
 
 model EmotionType {
@@ -54,9 +68,9 @@ model EmotionType {
   name     String   @unique
   level    Int      // 1 = Emotion principale, 2 = Sous-émotion
   parentId Int?     
-  parent   EmotionType? @relation("EmotionHierarchy", fields: [parentId], references: [id])  // ✅ Relation inverse parent
-  children EmotionType[] @relation("EmotionHierarchy")  // ✅ Relation inverse enfants
-  emotions Emotion[] @relation("EmotionToType") // ✅ Relation inverse vers Emotion
+  parent   EmotionType? @relation("EmotionHierarchy", fields: [parentId], references: [id])
+  children EmotionType[] @relation("EmotionHierarchy")
+  userEmotions UserEmotion[] @relation("EmotionToType")
   color    String?  // Couleur de l'émotion (uniquement pour niveau 1)
   bgColor  String?  // Couleur de fond de l'émotion (uniquement pour niveau 1)
 }
