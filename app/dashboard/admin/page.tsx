@@ -28,7 +28,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (status === "loading") return;
-    if (!session || !session.user || session.user.role !== "admin") {
+    if (!session || !session.user || session.user.role !== "ADMIN") {
       router.push("/auth/login"); // Redirige si pas admin
     }
   }, [session, status, router]);

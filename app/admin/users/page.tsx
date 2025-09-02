@@ -10,7 +10,7 @@ export default function UsersAdminPage() {
   const [users, setUsers] = useState<{ id: number; name: string; email: string; role: string }[]>([]);
 
   useEffect(() => {
-    if (!session || session.user.role !== "admin") {
+    if (!session || session.user.role !== "ADMIN") {
       router.push("/");
     }
     fetchUsers();

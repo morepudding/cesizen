@@ -8,7 +8,7 @@ export async function GET() {
   try {
     // ➜ Optionnel : vérifier si l'utilisateur est admin
     // const session = await getServerSession(authOptions);
-    // if (!session || session.user?.role !== "admin") {
+    // if (!session || session.user?.role !== "ADMIN") {
     //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     // }
 
@@ -33,7 +33,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user?.role !== "admin") {
+    if (!session || session.user?.role !== "ADMIN") {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user?.role !== "admin") {
+    if (!session || session.user?.role !== "ADMIN") {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 

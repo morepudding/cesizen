@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 // ✅ Modifier le contenu d'une page
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== "admin") {
+  if (!session || session.user.role !== "ADMIN") {
     return NextResponse.json({ error: "Non autorisé" }, { status: 403 });
   }
 

@@ -7,6 +7,130 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model StressQuestion {
+  id     Int    @id @default(autoincrement())
+  event  String @unique
+  points Int
+}
+
+model StressResult {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  totalScore Int
+  createdAt  DateTime @default(now())
+  user       User?    @relation("UserStressResults", fields: [userId], references: [id])
+}
+
+model User {
+  id                Int              @id @default(autoincrement())
+  name              String?
+  email             String?          @unique
+  emailVerified     DateTime?
+  image             String?
+  password          String?
+  role              Role             @default(USER)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  isActive          Boolean          @default(true)
+  resetToken        String?
+  resetTokenExpires DateTime?
+  favorites         Favorite[]
+  results           Result[]
+  stressResults     StressResult[]   @relation("UserStressResults")
+  tickets           Ticket[]
+  ticketResponses   TicketResponse[]
+  userEmotions      UserEmotion[]
+}
+
+model UserEmotion {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  emotionId   Int
+  date        DateTime    @default(now())
+  comment     String?
+  emotionType EmotionType @relation("EmotionToType", fields: [emotionId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+}
+
+model Result {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  totalScore Int
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model EmotionType {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  level        Int
+  parentId     Int?
+  color        String?
+  bgColor      String?
+  parent       EmotionType?  @relation("EmotionHierarchy", fields: [parentId], references: [id])
+  children     EmotionType[] @relation("EmotionHierarchy")
+  userEmotions UserEmotion[] @relation("EmotionToType")
+}
+
+model Ticket {
+  id          Int              @id @default(autoincrement())
+  subject     String
+  description String
+  type        TicketType
+  priority    TicketPriority   @default(MOYENNE)
+  status      TicketStatus     @default(OUVERT)
+  userId      Int
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  user        User             @relation(fields: [userId], references: [id])
+  responses   TicketResponse[]
+}
+
+model TicketResponse {
+  id        Int      @id @default(autoincrement())
+  message   String
+  isAdmin   Boolean  @default(false)
+  ticketId  Int
+  userId    Int
+  createdAt DateTime @default(now())
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Activity {
+  id          Int              @id @default(autoincrement())
+  title       String           @unique
+  description String
+  category    ActivityCategory
+  duration    String
+  level       String
+  location    String
+  equipment   String?
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  favorites   Favorite[]
+}
+
+model Favorite {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  activityId Int
+  createdAt  DateTime @default(now())
+  activity   Activity @relation(fields: [activityId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, activityId])
+}
+
+model PageContent {
+  id        Int      @id @default(autoincrement())
+  page      String   @unique
+  title     String
+  content   String
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   USER
   ADMIN
@@ -32,133 +156,9 @@ enum TicketType {
   AUTRE
 }
 
-model StressQuestion {
-  id     Int    @id @default(autoincrement())
-  event  String @unique
-  points Int
-}
-
-model StressResult {
-  id         Int      @id @default(autoincrement())
-  userId     Int?
-  user       User?    @relation(fields: [userId], references: [id], name: "UserStressResults")
-  totalScore Int
-  createdAt  DateTime @default(now())
-}
-
-model User {
-  id            Int            @id @default(autoincrement())
-  name          String?
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  role          Role          @default(USER)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  favorites     Favorite[]
-  userEmotions  UserEmotion[]
-  results       Result[]
-  stressResults StressResult[] @relation("UserStressResults")
-  tickets       Ticket[]
-  ticketResponses TicketResponse[]
-  isActive      Boolean       @default(true)
-  resetToken     String?
-  resetTokenExpires DateTime?
-}
-
-model UserEmotion {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  emotionId   Int      
-  emotionType EmotionType @relation(fields: [emotionId], references: [id], name: "EmotionToType")
-  date        DateTime @default(now())
-  comment     String?
-}
-
-model Result {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id])
-  totalScore Int
-  createdAt  DateTime @default(now())
-}
-
-model EmotionType {
-  id       Int      @id @default(autoincrement())
-  name     String   @unique
-  level    Int      // 1 = Emotion principale, 2 = Sous-émotion
-  parentId Int?     
-  parent   EmotionType? @relation("EmotionHierarchy", fields: [parentId], references: [id])
-  children EmotionType[] @relation("EmotionHierarchy")
-  userEmotions UserEmotion[] @relation("EmotionToType")
-  color    String?  // Couleur de l'émotion (uniquement pour niveau 1)
-  bgColor  String?  // Couleur de fond de l'émotion (uniquement pour niveau 1)
-}
-
-model Ticket {
-  id          Int             @id @default(autoincrement())
-  subject     String
-  description String
-  type        TicketType
-  priority    TicketPriority  @default(MOYENNE)
-  status      TicketStatus    @default(OUVERT)
-  userId      Int
-  user        User            @relation(fields: [userId], references: [id])
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  responses   TicketResponse[]
-}
-
-model TicketResponse {
-  id        Int      @id @default(autoincrement())
-  message   String
-  isAdmin   Boolean  @default(false)
-  ticketId  Int
-  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-}
-
 enum ActivityCategory {
   BIEN_ETRE
   SPORT
   ART
   AVENTURE
-}
-
-model Activity {
-  id          Int        @id @default(autoincrement())
-  title       String     @unique
-  description String
-  category    ActivityCategory
-  duration    String
-  level       String
-  location    String
-  equipment   String?
-  isActive    Boolean    @default(true)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  favorites   Favorite[]
-}
-
-model Favorite {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id])
-  activityId Int
-  activity   Activity @relation(fields: [activityId], references: [id])
-  createdAt  DateTime @default(now())
-
-  @@unique([userId, activityId])
-}
-
-model PageContent {
-  id       Int    @id @default(autoincrement())
-  page     String @unique
-  title    String
-  content  String
-  updatedAt DateTime @updatedAt
 }
