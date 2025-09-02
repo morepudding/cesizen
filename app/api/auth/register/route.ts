@@ -42,7 +42,7 @@ async function registerHandler(req: Request) {
       email: sanitizedEmail,
       name: sanitizedName,
       password: hashedPassword,
-      role: "user", // Tous les nouveaux utilisateurs ont le rôle "user" par défaut
+      role: "USER", // Tous les nouveaux utilisateurs ont le rôle "USER" par défaut
     },
   });
 
