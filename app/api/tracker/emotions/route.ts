@@ -5,19 +5,13 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(req: Request) {
   try {
-    console.log("=== START GET /api/tracker/emotions ===");
-    console.log("Prisma client:", prisma ? "Available" : "UNDEFINED");
-    
     const session = await getServerSession(authOptions);
-    console.log("Session:", session ? "Found" : "Not found");
-    
     if (!session) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
     console.log("Session user ID:", session.user.id);
 
     const url = new URL(req.url);
     const filter = url.searchParams.get("filter");
-    console.log("Filter parameter:", filter);
 
     let dateFilter = {};
 
@@ -36,12 +30,6 @@ export async function GET(req: Request) {
     console.log("Date filter:", dateFilter);
     console.log("Looking for emotions with userId:", Number(session.user.id));
 
-    // Test basic connection to database first
-    console.log("Testing database connection...");
-    const userCount = await prisma.user.count();
-    console.log("Database connection OK. User count:", userCount);
-
-    console.log("Trying to fetch emotions...");
     const emotions = await (prisma as any).userEmotion.findMany({
       where: {
         userId: Number(session.user.id),
@@ -58,15 +46,9 @@ export async function GET(req: Request) {
     });
 
     console.log("Émotions récupérées:", emotions);
-    console.log("=== END GET /api/tracker/emotions ===");
     return NextResponse.json(emotions);
   } catch (error) {
-    console.error("=== ERROR in GET /api/tracker/emotions ===");
-    console.error("Error details:", error);
-    if (error instanceof Error) {
-      console.error("Error message:", error.message);
-      console.error("Error stack:", error.stack);
-    }
+    console.error("Erreur dans GET /api/tracker/emotions:", error);
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 });
   }
 }
