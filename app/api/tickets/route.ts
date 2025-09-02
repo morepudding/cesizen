@@ -55,7 +55,7 @@ export async function POST(request: Request) {
 }
 
 // Récupérer les tickets de l'utilisateur
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
     

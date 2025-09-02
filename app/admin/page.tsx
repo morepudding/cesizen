@@ -21,7 +21,7 @@ export default function AdminPage() {
   return (
     <div className="p-10">
       <h1 className="text-3xl font-bold">⚙️ Espace Administrateur</h1>
-      <p className="mt-4 text-gray-600">Bienvenue dans la section d'administration de CESIZen.</p>
+      <p className="mt-4 text-gray-600">Bienvenue dans la section d&apos;administration de CESIZen.</p>
 
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link href="/admin/users" className="p-6 bg-white text-blue-600 rounded-lg shadow hover:bg-blue-100 transition">
@@ -48,6 +48,12 @@ export default function AdminPage() {
         <Link href="/admin/content" className="p-6 bg-white text-blue-600 rounded-lg shadow hover:bg-blue-100 transition">
           <h2 className="text-xl font-semibold">📝 Gestion des Contenus</h2>
           <p>Modifier le contenu des pages du site.</p>
+        </Link>
+
+        {/* 🎫 Ajout du bouton "Gestion des Tickets" */}
+        <Link href="/admin/tickets" className="p-6 bg-white text-blue-600 rounded-lg shadow hover:bg-blue-100 transition">
+          <h2 className="text-xl font-semibold">🎫 Gestion des Tickets</h2>
+          <p>Voir et gérer les demandes de support des utilisateurs.</p>
         </Link>
       </div>
     </div>

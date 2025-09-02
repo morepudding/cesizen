@@ -88,7 +88,7 @@ export default function SupportPage() {
       } else {
         setMessage(data.error || "Erreur lors de la création");
       }
-    } catch (error) {
+    } catch {
       setMessage("Erreur de connexion");
     }
     setIsSubmitting(false);
@@ -169,7 +169,7 @@ export default function SupportPage() {
                     onChange={(e) => setType(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="AIDE">Demande d'aide</option>
+                    <option value="AIDE">Demande d&apos;aide</option>
                     <option value="BUG">Signaler un bug</option>
                     <option value="SUGGESTION">Suggestion</option>
                     <option value="AUTRE">Autre</option>

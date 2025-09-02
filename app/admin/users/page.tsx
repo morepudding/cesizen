@@ -14,7 +14,7 @@ export default function UsersAdminPage() {
       router.push("/");
     }
     fetchUsers();
-  }, [session]);
+  }, [session, router]);
 
   const fetchUsers = async () => {
     const res = await fetch("/api/admin/users");

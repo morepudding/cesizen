@@ -133,7 +133,7 @@ function Navbar() {
 function Footer() {
   return (
     <footer className="bg-green-900 text-white py-4 mt-10 text-center">
-      <p>&copy; {new Date().getFullYear()} CESIZen - L'application de votre santé mentale.</p>
+      <p>&copy; {new Date().getFullYear()} CESIZen - L&apos;application de votre santé mentale.</p>
     </footer>
   );
 }

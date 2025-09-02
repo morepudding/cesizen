@@ -71,7 +71,7 @@ export default function LoginPage() {
       } else {
         setError(data.message || "Une erreur s'est produite");
       }
-    } catch (error) {
+    } catch {
       setError("Une erreur s'est produite lors de la création du compte");
     }
   };

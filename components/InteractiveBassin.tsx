@@ -31,7 +31,7 @@ export default function InteractiveBassin() {
           transition={{ duration: 0.4 }}
         >
           <p className="text-sm">
-            Cet espace symbolise l'exercice de respiration. Inspirez profondément, retenez et expirez pour retrouver votre <a href = "respiration" >calme.</a>
+            Cet espace symbolise l&apos;exercice de respiration. Inspirez profondément, retenez et expirez pour retrouver votre <a href = "respiration" >calme.</a>
           </p>
         </motion.div>
       )}
