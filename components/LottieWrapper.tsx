@@ -8,7 +8,7 @@ const Lottie = dynamic(() => import('lottie-react'), {
 });
 
 interface LottieWrapperProps {
-  animationData: any;
+  animationData: object;
   className?: string;
   loop?: boolean;
   autoplay?: boolean;
