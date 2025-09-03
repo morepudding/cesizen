@@ -12,7 +12,7 @@ const MOVE_OFFSET = 10;
 
 const ZenGarden: React.FC = () => {
   const [garden] = useState(new Garden('garden1'));
-  const [_, forceUpdate] = useState(0);
+  const [, forceUpdate] = useState(0);
   const commandManagerRef = useRef(new CommandManager());
   const [selectedElement, setSelectedElement] = useState<null | typeof garden.children[0]>(null);
   

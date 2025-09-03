@@ -38,6 +38,19 @@ export default function AdminStressResults() {
     <div className="p-10">
       <h1 className="text-2xl font-bold">📊 Configuration des Résultats</h1>
 
+      {/* Affichage des résultats existants */}
+      {results.length > 0 && (
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold">Configurations existantes</h2>
+          {results.map((result) => (
+            <div key={result.id} className="border p-2 mb-2 rounded">
+              <p>Score: {result.scoreMin}-{result.scoreMax}</p>
+              <p>{result.message}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="mt-4">
         <h2 className="text-lg font-semibold">Ajouter une configuration</h2>
         <input

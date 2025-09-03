@@ -25,7 +25,7 @@ class NextBruteForceProtector {
 
     recordFailedAttempt(identifier: string): { blocked: boolean; remainingTime?: number } {
         const now = Date.now();
-        let attemptData = this.attempts.get(identifier) || { count: 0, lockedUntil: 0, lockoutLevel: 0 };
+        const attemptData = this.attempts.get(identifier) || { count: 0, lockedUntil: 0, lockoutLevel: 0 };
         
         attemptData.count++;
         
