@@ -122,11 +122,88 @@ jobs:
     - name: Security Test Results
       run: echo "Security tests completed! Check logs above for details."
 
+  # Lighthouse Performance Audit
+  lighthouse:
+    runs-on: ubuntu-latest
+    name: Performance Audit
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    # Service de base de donnees pour Lighthouse
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: cesizen_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/cesizen_test
+      NEXTAUTH_SECRET: test-secret-key
+      NEXTAUTH_URL: http://localhost:3000
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Setup Database
+      run: npx prisma db push
+      
+    - name: Build and start app
+      run: |
+        npm run build
+        npm start &
+        sleep 10
+      
+    - name: Wait for app to be ready
+      run: |
+        for i in {1..30}; do
+          if curl -f http://localhost:3000 > /dev/null 2>&1; then
+            echo "App is ready for Lighthouse audit!"
+            break
+          fi
+          echo "Waiting for app... ($i/30)"
+          sleep 3
+        done
+      
+    - name: Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli@0.12.x
+        lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
+        LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG: ${{ github.repository }}
+      
+    - name: Upload Lighthouse results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: lighthouse-results
+        path: .lighthouseci/
+
   # Deploy Ready
   deploy-ready:
     runs-on: ubuntu-latest
     name: Ready to Deploy
-    needs: [test, security]
+    needs: [test, security, lighthouse]
     if: github.ref == 'refs/heads/main'
     
     steps:
@@ -138,3 +215,4 @@ jobs:
         echo "  - Tests passed"
         echo "  - Build successful"
         echo "  - Security tests completed"
+        echo "  - Performance audit completed"
