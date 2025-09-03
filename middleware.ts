@@ -38,7 +38,8 @@ export default withAuth(
   async function middleware(req) {
     const { pathname } = req.nextUrl;
     const clientIP = getClientIP(req);
-      // Appliquer rate limiting sur toutes les APIs sensibles
+    
+    // Appliquer rate limiting sur toutes les APIs sensibles
     if (pathname.startsWith('/api/')) {
       const isRateLimited = rateLimiter.isRateLimited(clientIP);
       if (isRateLimited) {
@@ -69,6 +70,21 @@ export default withAuth(
         
         // Autoriser l'API de test sans authentification
         if (pathname.startsWith('/api/test')) {
+          return true;
+        }
+        
+        // Autoriser l'endpoint metrics pour Prometheus
+        if (pathname.startsWith('/api/metrics')) {
+          return true;
+        }
+        
+        // Autoriser l'endpoint de test monitoring
+        if (pathname.startsWith('/api/test-monitoring')) {
+          return true;
+        }
+        
+        // Autoriser les endpoints de métriques business
+        if (pathname.startsWith('/api/zen-visit')) {
           return true;
         }
         
@@ -109,6 +125,6 @@ export const config = {
     "/dashboard/:path*", 
     "/tracker/:path*", 
     "/admin/:path*",
-    "/api/:path*"
+    "/api/((?!metrics).)*" // Exclure /api/metrics du middleware
   ] 
 }

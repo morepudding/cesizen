@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { trackActivityCreated } from "../../../lib/monitoring";
 
 // ✅ Récupérer toutes les activités
 export async function GET() {
@@ -25,6 +26,9 @@ export async function POST(req: Request) {
     const newActivity = await prisma.activity.create({
       data: { title, description, category },
     });
+
+    // 📈 Tracker la création d'activité pour les métriques
+    trackActivityCreated();
 
     return NextResponse.json(newActivity);
   } catch (error) {

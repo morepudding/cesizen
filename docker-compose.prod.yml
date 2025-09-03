@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # CESIZen Application (Production)
+  cesizen-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: cesizen-app-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+    depends_on:
+      - cesizen-db
+    restart: always
+    networks:
+      - cesizen-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # PostgreSQL Database (Production)
+  cesizen-db:
+    image: postgres:13-alpine
+    container_name: cesizen-db-prod
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - cesizen-db-prod-data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - cesizen-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cesizen-db-prod-data:
+    driver: local
+
+networks:
+  cesizen-network:
+    driver: bridge

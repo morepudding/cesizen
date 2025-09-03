@@ -1,8 +1,54 @@
 version: '3.8'
+
 services:
-  # ...existing code...
-  mysql:
-    # ...existing code...
+  # CESIZen Application (Development)
+  cesizen-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: cesizen-app-dev
     ports:
-      - "3307:3306"  # Changed from 3306:3306 to 3307:3306
-    # ...existing code...
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres.tdcukmpowcrnadeyzrfj:Swagmann12!@aws-1-eu-west-3.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
+      - NEXTAUTH_SECRET=supersecretkey123
+      - NEXTAUTH_URL=http://localhost:3000
+      - EMAIL_USER=bottero.romain1811@gmail.com
+      - EMAIL_PASS=Naala123!
+    # Note: Supabase utilisé, pas besoin du container DB local
+    # depends_on:
+    #   - cesizen-db
+    volumes:
+      # Hot reload for development
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+    networks:
+      - cesizen-network
+
+  # PostgreSQL Database (Commenté - Supabase utilisé)
+  # cesizen-db:
+  #   image: postgres:13-alpine
+  #   container_name: cesizen-db-dev
+  #   environment:
+  #     - POSTGRES_DB=cesizen_dev
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=cesizen123
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - cesizen-db-data:/var/lib/postgresql/data
+  #     - ./prisma/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+  #   restart: unless-stopped
+  #   networks:
+  #     - cesizen-network
+
+volumes:
+  cesizen-db-data:
+    driver: local
+
+networks:
+  cesizen-network:
+    driver: bridge

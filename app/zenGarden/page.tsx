@@ -1,6 +1,6 @@
 // pages/index.tsx
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const ZenGarden = dynamic(() => import('@/components/ZenGarden'), { 
@@ -16,6 +16,14 @@ const ZenGarden = dynamic(() => import('@/components/ZenGarden'), {
 });
 
 const Home: React.FC = () => {
+  // Tracker les visites du jardin zen pour les métriques
+  useEffect(() => {
+    // Envoyer une métrique de visite du jardin zen
+    fetch('/api/zen-visit', { method: 'POST' }).catch(() => {
+      // Échec silencieux - on ne veut pas casser l'UX pour les métriques
+    });
+  }, []);
+
   return (
     <div>
       <h1>Mon Jardin Zen Personnel</h1>

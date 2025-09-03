@@ -1,0 +1,43 @@
+# ===== SYSTÈME DE MONITORING CESIZEN =====
+# Configuration Prometheus pour surveiller l'application CESIZen
+
+global:
+  scrape_interval: 15s # Collecte des métriques toutes les 15 secondes
+  evaluation_interval: 15s # Evaluation des règles toutes les 15 secondes
+
+# Configuration des rules d'alertes
+rule_files:
+  # - "alerts.yml"
+
+# Configuration des cibles à surveiller
+scrape_configs:
+  # Surveillance de Prometheus lui-même
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Surveillance de l'application CESIZen en PRODUCTION sur Vercel
+  - job_name: 'cesizen-app-production'
+    static_configs:
+      - targets: ['cesizen-ve27.vercel.app'] # Production Vercel
+    metrics_path: '/api/metrics'
+    scrape_interval: 60s # Plus long pour Vercel (éviter rate limiting)
+    scrape_timeout: 30s
+    scheme: https # HTTPS obligatoire pour Vercel
+    honor_labels: true
+    
+  # Surveillance locale pour développement (optionnel)
+  - job_name: 'cesizen-app-local'
+    static_configs:
+      - targets: ['host.docker.internal:3002'] # Local dev
+    metrics_path: '/api/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    honor_labels: true
+
+# Configuration des alertes (Grafana Cloud ou local)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+          # - "alertmanager:9093"
