@@ -19,7 +19,7 @@ scrape_configs:
   # Surveillance de l'application CESIZen en PRODUCTION sur Vercel
   - job_name: 'cesizen-app-production'
     static_configs:
-      - targets: ['cesizen-ve27.vercel.app'] # Production Vercel
+      - targets: ['cesizen-ve27.vercel.app'] # Production Vercel - FONCTIONNE !
     metrics_path: '/api/metrics'
     scrape_interval: 60s # Plus long pour Vercel (éviter rate limiting)
     scrape_timeout: 30s
