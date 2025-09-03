@@ -14,8 +14,8 @@ describe('Hero Component', () => {
   it('devrait avoir les boutons principaux', () => {
     render(<Hero />)
     
-    // Vérifier la présence de boutons/liens
-    const buttons = screen.getAllByRole('button')
-    expect(buttons.length).toBeGreaterThan(0)
+    // Vérifier la présence de liens (le composant utilise des liens, pas des boutons)
+    const links = screen.getAllByRole('link')
+    expect(links.length).toBeGreaterThan(0)
   })
 })
