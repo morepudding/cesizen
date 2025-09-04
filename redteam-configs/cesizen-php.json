@@ -1,0 +1,54 @@
+{
+  "name": "CESIZen PHP",
+  "url": "https://cesizen-php.example.com",
+  "auth": {
+    "cookie": "PHPSESSID=test123"
+  },
+  "endpoints": [
+    "/",
+    "/index.php",
+    "/login.php",
+    "/register.php",
+    "/profile.php",
+    "/admin/index.php",
+    "/admin/users.php",
+    "/api/emotions.php",
+    "/api/activities.php",
+    "/dashboard.php",
+    "/config/database.php",
+    "/includes/auth.php"
+  ],
+  "exclude": [
+    "\\.css$",
+    "\\.js$",
+    "\\.png$",
+    "\\.jpg$",
+    "^/vendor/",
+    "^/node_modules/"
+  ],
+  "discover": {
+    "crawl": true,
+    "maxPages": 25
+  },
+  "techStack": "PHP + MySQL + Apache/Nginx",
+  "phpSpecific": {
+    "testFileInclusion": [
+      "?page=../../../etc/passwd",
+      "?include=php://filter/read=convert.base64-encode/resource=index.php",
+      "?file=../../../../windows/system32/drivers/etc/hosts"
+    ],
+    "testSqlInjection": [
+      "?id=1' OR '1'='1",
+      "?user=admin'--",
+      "?id=1 UNION SELECT 1,user(),version()--"
+    ],
+    "commonFiles": [
+      "/config.php",
+      "/database.php",
+      "/admin.php",
+      "/.env",
+      "/phpinfo.php",
+      "/test.php"
+    ]
+  }
+}

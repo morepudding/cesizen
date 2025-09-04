@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Démonstration Sécurité CESIZen</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0,255,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #00ff00;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #00ff00;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff00;
+            margin: 0;
+        }
+        
+        .vulnerability {
+            background: rgba(255,0,0,0.1);
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .vulnerability:hover {
+            background: rgba(255,0,0,0.2);
+            transform: scale(1.02);
+        }
+        
+        .vulnerability h3 {
+            color: #ff4444;
+            margin-top: 0;
+        }
+        
+        .url-demo {
+            background: rgba(0,255,0,0.1);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .url-demo a {
+            color: #00ff00;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        
+        .url-demo a:hover {
+            text-shadow: 0 0 5px #00ff00;
+        }
+        
+        .proof-section {
+            background: rgba(255,255,0,0.1);
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .proof-section h2 {
+            color: #ffff00;
+            text-align: center;
+        }
+        
+        .instructions {
+            background: rgba(0,0,255,0.1);
+            border: 2px solid #4444ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .instructions h2 {
+            color: #4444ff;
+        }
+        
+        .blink {
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #444;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 AUDIT SÉCURITÉ CESIZEN</h1>
+            <p>Démonstration des vulnérabilités trouvées</p>
+            <p><strong>Cible:</strong> https://cesizen-app.up.railway.app</p>
+            <p><strong>Date:</strong> 04/09/2025</p>
+        </div>
+        
+        <div class="vulnerability">
+            <h3>🚨 1. ABSENCE DE RATE LIMITING</h3>
+            <p><strong>Impact:</strong> Possibilité d'attaques par déni de service</p>
+            <p><strong>Preuve:</strong> 250+ requêtes simultanées acceptées sans limitation</p>
+        </div>
+        
+        <div class="vulnerability">
+            <h3>🎯 2. CLICKJACKING POSSIBLE</h3>
+            <p><strong>Impact:</strong> Actions utilisateur détournables via iframe</p>
+            <p><strong>Preuve:</strong> Absence d'en-tête X-Frame-Options</p>
+        </div>
+        
+        <div class="vulnerability">
+            <h3>🔒 3. EN-TÊTES DE SÉCURITÉ MANQUANTS</h3>
+            <p><strong>Impact:</strong> Multiples vecteurs d'attaque possibles</p>
+            <p><strong>Détails:</strong> 0/7 en-têtes de sécurité présents</p>
+        </div>
+        
+        <div class="proof-section">
+            <h2 class="blink">📊 PREUVES EN DIRECT</h2>
+            <p>Clique sur les liens ci-dessous pour voir la démonstration sur ton site :</p>
+            
+            
+            <div class="url-demo">
+                <strong>Message de pentest visible:</strong><br>
+                <a href="https://cesizen-app.up.railway.app/?message=🚨_SECURITY_AUDIT_BY_REDTEAM" target="_blank">https://cesizen-app.up.railway.app/?message=🚨_SECURITY_AUDIT_BY_REDTEAM</a>
+                
+            </div>
+            
+            <div class="url-demo">
+                <strong>Alerte rate limiting:</strong><br>
+                <a href="https://cesizen-app.up.railway.app/?error=⚠️_NO_RATE_LIMITING_DETECTED" target="_blank">https://cesizen-app.up.railway.app/?error=⚠️_NO_RATE_LIMITING_DETECTED</a>
+                
+            </div>
+            
+            <div class="url-demo">
+                <strong>Avertissement headers:</strong><br>
+                <a href="https://cesizen-app.up.railway.app/?warning=🔒_MISSING_SECURITY_HEADERS" target="_blank">https://cesizen-app.up.railway.app/?warning=🔒_MISSING_SECURITY_HEADERS</a>
+                
+            </div>
+            
+            <div class="url-demo">
+                <strong>Alerte clickjacking:</strong><br>
+                <a href="https://cesizen-app.up.railway.app/?alert=🎯_CLICKJACKING_VULNERABILITY_FOUND" target="_blank">https://cesizen-app.up.railway.app/?alert=🎯_CLICKJACKING_VULNERABILITY_FOUND</a>
+                
+            </div>
+            
+            <div class="url-demo">
+                <strong>Notification audit terminé:</strong><br>
+                <a href="https://cesizen-app.up.railway.app/?notification=📊_FULL_PENTEST_COMPLETED" target="_blank">https://cesizen-app.up.railway.app/?notification=📊_FULL_PENTEST_COMPLETED</a>
+                
+            </div>
+            
+        </div>
+        
+        <div class="instructions">
+            <h2>📋 INSTRUCTIONS POUR TON COLLÈGUE</h2>
+            <ol>
+                <li><strong>Clique sur les liens ci-dessus</strong> pour voir les preuves sur son site</li>
+                <li><strong>Vérifie ses logs serveur</strong> - il verra toutes les requêtes de test</li>
+                <li><strong>Regarde les paramètres URL</strong> - les messages apparaissent parfois à l'écran</li>
+                <li><strong>Teste le clickjacking</strong> avec le fichier HTML généré</li>
+                <li><strong>Lance un scan</strong> avec les outils fournis pour plus de détails</li>
+            </ol>
+        </div>
+        
+        <div class="vulnerability">
+            <h3>🛠️ CORRECTIONS RECOMMANDÉES</h3>
+            <ul>
+                <li>Ajouter des en-têtes de sécurité (helmet.js pour Node.js)</li>
+                <li>Implémenter un rate limiting (express-rate-limit)</li>
+                <li>Configurer X-Frame-Options pour éviter le clickjacking</li>
+                <li>Ajouter une Content Security Policy (CSP)</li>
+                <li>Implémenter HTTPS strict avec HSTS</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>🤝 Audit réalisé dans un cadre éducatif et bienveillant</p>
+            <p>📞 Contacte-moi pour discuter des corrections à apporter</p>
+            <p><em>Red Team Testing - Sécurité Web</em></p>
+        </div>
+    </div>
+    
+    <script>
+        // Animation des éléments
+        document.addEventListener('DOMContentLoaded', function() {
+            const vulnerabilities = document.querySelectorAll('.vulnerability');
+            vulnerabilities.forEach((vuln, index) => {
+                setTimeout(() => {
+                    vuln.style.opacity = '0';
+                    vuln.style.transform = 'translateX(-50px)';
+                    setTimeout(() => {
+                        vuln.style.opacity = '1';
+                        vuln.style.transform = 'translateX(0)';
+                        vuln.style.transition = 'all 0.5s ease';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+        
+        // Message d'alerte au chargement
+        setTimeout(() => {
+            if (confirm('🎯 Démonstration de sécurité détectée!\n\nCette page prouve que ton site a des vulnérabilités.\n\nVeux-tu voir les détails ?')) {
+                document.querySelector('.proof-section').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

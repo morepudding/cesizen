@@ -1,0 +1,32 @@
+{
+  "name": "CESIZen Next.js",
+  "url": "https://cesizen-app.up.railway.app",
+  "auth": {
+    "bearer": null
+  },
+  "endpoints": [
+    "/",
+    "/api/auth/register",
+    "/api/auth/login",
+    "/api/user/profile",
+    "/api/admin/users",
+    "/api/admin/tickets",
+    "/dashboard",
+    "/dashboard/admin",
+    "/api/emotions",
+    "/api/activities",
+    "/api/tracker"
+  ],
+  "exclude": [
+    "^/_next",
+    "\\.css$",
+    "\\.js$",
+    "\\.png$",
+    "\\.jpg$"
+  ],
+  "discover": {
+    "crawl": true,
+    "maxPages": 20
+  },
+  "techStack": "Next.js + NextAuth + Prisma + Supabase"
+}
